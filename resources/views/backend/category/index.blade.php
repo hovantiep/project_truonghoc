@@ -45,7 +45,7 @@
                     @foreach($categories as $category)
                         <tr>
                             <td class="text-center">{{ $i++ }}</td>
-                            <td>{{ $category->name }}</td>
+                            <td {{ ($category->parent_id == 0) ? "class=text-primary" : "" }}>{{ $category->name }}</td>
                             <td class="text-center">{{ $category->order }}</td>
                             <td>
                                 @if($category->parent_id == 0)
