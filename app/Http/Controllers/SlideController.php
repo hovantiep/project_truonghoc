@@ -2,8 +2,8 @@
 
 namespace truonghoc\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\File\File;
+use truonghoc\Http\Requests\SlideStoreRequest;
+use truonghoc\Http\Requests\SlideUpdateRequest;
 use truonghoc\Slide;
 
 class SlideController extends Controller
@@ -37,9 +37,8 @@ class SlideController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SlideStoreRequest $request)
     {
-//        Slide::create($request->all());
         $slide = new Slide();
         $slide->name = $request->input('name');
         $slide->order = $request->input('order');
@@ -52,10 +51,10 @@ class SlideController extends Controller
             $image->move('resources/upload/slide/', $image_name);
         };
 //        Lua chon hanh dong [rat hay]
-        if ($request->get('action') == 'save') {
+        if ($request->get('action') === 'save') {
             $slide->save();
             return redirect()->route('slide.create');
-        } elseif ($request->get('action') == 'save_and_close') {
+        } elseif ($request->get('action') === 'save_and_close') {
             $slide->save();
             return redirect()->route('slide.index');
         }
@@ -94,7 +93,7 @@ class SlideController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SlideUpdateRequest $request, $id)
     {
         $slide = Slide::find($id);
         $slide->name = $request->input('name');

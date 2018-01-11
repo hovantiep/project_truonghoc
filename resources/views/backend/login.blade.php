@@ -1,4 +1,4 @@
-@extends('backend.layouts.auth')
+@extends('backend.layouts.dashboard')
 @section('content')
     <div class="card card-login mx-auto mt-5">
         <div class="card-header">Login</div>

@@ -11,18 +11,21 @@
     <div class="row">
         <div class="col-12">
             <h1>Form create</h1>
+            {{--Displaying The Validation Errors--}}
+            @include('backend.partials.validate_errors')
+            {{--End Displaying The Validation Errors--}}
             <form action="{{ route('slide.store') }}" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="example-text-input" class="col-2 col-form-label">Name</label>
                     <div class="col-10">
-                        <input class="form-control" type="text" value="" id="example-text-input"
+                        <input class="form-control" type="text" value="{!! old('name') !!}" id="example-text-input"
                                name="name">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="example-number-input" class="col-2 col-form-label">Order</label>
                     <div class="col-10">
-                        <input class="form-control" type="number" value="1" id="example-number-input" name="order">
+                        <input class="form-control" type="number" value="{!! old('order') !!}" id="example-number-input" name="order">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -36,12 +39,13 @@
                 <div class="form-group row">
                     <label for="example-url-input" class="col-2 col-form-label">Link</label>
                     <div class="col-10">
-                        <input class="form-control" type="url" value="https://domain.com"
+                        <input class="form-control" type="url" value="{!! old('link',asset('/')) !!}"
                                id="example-url-input" name="link">
                     </div>
                 </div>
                 <button type="submit" name="action" value="save" class="btn btn-primary offset-2">Save</button>
                 <button type="submit" name="action" value="save_and_close" class="btn btn-success">Save &amp; Close</button>
+                <a href="{{ route('slide.index') }}" class="btn btn-danger">Close</a>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
         </div>

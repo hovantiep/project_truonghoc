@@ -11,6 +11,9 @@
     <div class="row">
         <div class="col-12">
             <h1>Form edit</h1>
+            {{--Displaying The Validation Errors--}}
+            @include('backend.partials.validate_errors')
+            {{--End Displaying The Validation Errors--}}
             <form action="{{ route('slide.update', $slide->id) }}" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="example-text-input" class="col-2 col-form-label">Name</label>
@@ -51,6 +54,7 @@
                     Show
                 </button>
                 <a href="{{ route('slide.show',$slide->id) }}" class="btn btn-info">Show</a>
+                <a href="{{ route('slide.index') }}" class="btn btn-danger">Close</a>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="_method" value="PUT"/>
             </form>
