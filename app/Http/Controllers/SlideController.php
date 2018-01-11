@@ -2,6 +2,7 @@
 
 namespace truonghoc\Http\Controllers;
 
+use Symfony\Component\Finder\SplFileInfo;
 use truonghoc\Http\Requests\SlideStoreRequest;
 use truonghoc\Http\Requests\SlideUpdateRequest;
 use truonghoc\Slide;
@@ -47,8 +48,12 @@ class SlideController extends Controller
         $image = $request->file('image');
         if (isset($image)) {
             $image_name = $image->getClientOriginalName();
-            $slide->image = $image_name;
-            $image->move('resources/upload/slide/', $image_name);
+//            Doi ten file
+            $onlyName = pathinfo($image_name, PATHINFO_FILENAME);
+            $extension = pathinfo($image_name, PATHINFO_EXTENSION);
+            $image_newName = str_slug($onlyName) . "-" . str_random() . "." . $extension;
+            $slide->image = $image_newName;
+            $image->move('resources/upload/slide/', $image_newName);
         };
 //        Lua chon hanh dong [rat hay]
         if ($request->get('action') === 'save') {
@@ -103,14 +108,18 @@ class SlideController extends Controller
         if (!empty($request->file('image'))) {
             $image = $request->file('image');
             $image_name = $image->getClientOriginalName();
-            $image->move('resources/upload/slide/', $image_name);
+//            Doi ten file -> khi bi ghi de
+            $onlyName = pathinfo($image_name, PATHINFO_FILENAME);
+            $extension = pathinfo($image_name, PATHINFO_EXTENSION);
+            $image_newName = str_slug($onlyName) . "-" . str_random() . "." . $extension;
+            $image->move('resources/upload/slide/', $image_newName);
 //        Xoa file cu
             $delImg = 'resources/upload/slide/' . $slide->image;
             if (\File::exists($delImg)) {
                 \File::delete($delImg);
             }
 //        Luu file moi
-            $slide->image = $image_name;
+            $slide->image = $image_newName;
         }
 //        Lua chon hanh dong [rat hay]
         if ($request->get('action') == 'save_and_close') {
@@ -136,7 +145,7 @@ class SlideController extends Controller
         if (\File::exists($delImg)) {
             \File::delete($delImg);
         }
-        $slide->delete($slide);
+        $slide->delete();
         return redirect()->route('slide.index');
     }
 }

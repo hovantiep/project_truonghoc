@@ -6,38 +6,43 @@
             <a href="{{ route('admin') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ route('slide.index') }}">Slide</a>
+            <a href="{{ route('category.index') }}">Category</a>
         </li>
         <li class="breadcrumb-item active">Show</li>
     </ol>
     <div class="row">
         <div class="col-12">
             <h1>Show</h1>
-            <form action="{{ route('slide.destroy',$slide->id) }}" method="POST">
+            <form action="{{ route('category.destroy',$category->id) }}" method="POST">
                 <div class="container">
                     <div class="row">
                         <label for="name" class="col-2">Name</label>
-                        <div class="col-10">{{ $slide->name }}</div>
+                        <div class="col-10">{{ $category->name }}</div>
                     </div>
                     <div class="row">
                         <label for="order" class="col-2">Order</label>
-                        <div class="col-10">{{ $slide->order }}
+                        <div class="col-10">{{ $category->order }}
                         </div>
                     </div>
                     <div class="row">
-                        <label for="link" class="col-2">Link</label>
-                        <a href="{{ $slide->link }}" class="col-10">{{ $slide->link }}</a>
+                        <label for="parentName" class="col-2">Parent</label>
+                        <div class="col-10">{{ $parentName->name }}
+                        </div>
                     </div>
-                    <div class="row mb-2">
-                        <div class="offset-md-2">
-                            <img src="{{ asset('resources/upload/slide/' . $slide->image) }}" alt="image"
-                                 class="img-responsive img-thumbnail">
+                    <div class="row">
+                        <label for="keywords" class="col-2">Keywords</label>
+                        <div class="col-10">{{ $category->keywords }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="description" class="col-2">Description</label>
+                        <div class="col-10">{{ $category->description }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="offset-2 col-10">
-                            <a href="{{ route('slide.index') }}" class="btn btn-info">Close</a>
-                            <a href="{{ route('slide.edit',$slide->id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('category.index') }}" class="btn btn-info">Close</a>
+                            <a href="{{ route('category.edit',$category->id) }}" class="btn btn-warning">Edit</a>
                             <button type="submit" name="action" value="delete"
                                     class="btn btn-danger"
                                     onclick="return confirmDel('Are you sure delete record ?')">Delete

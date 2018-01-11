@@ -6,7 +6,7 @@
             <a href="{{ route('admin') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ route('slide.index') }}">Slide</a>
+            <a href="{{ route('category.index') }}">Category</a>
         </li>
         <li class="breadcrumb-item active">Edit</li>
     </ol>

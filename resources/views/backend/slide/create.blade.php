@@ -3,14 +3,16 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="index.blade.php">Dashboard</a>
+            <a href="{{ route('admin') }}">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Form Page</li>
+        <li class="breadcrumb-item">
+            <a href="{{ route('slide.index') }}">Slide</a>
+        </li>
+        <li class="breadcrumb-item active">Create</li>
     </ol>
-
     <div class="row">
         <div class="col-12">
-            <h1>Form create</h1>
+            <h1>Create</h1>
             {{--Displaying The Validation Errors--}}
             @include('backend.partials.validate_errors')
             {{--End Displaying The Validation Errors--}}
