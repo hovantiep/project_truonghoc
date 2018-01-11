@@ -26,7 +26,7 @@
                     </div>
                     <div class="row">
                         <label for="parentName" class="col-2">Parent</label>
-                        <div class="col-10">{{ $parentName->name }}
+                        <div class="col-10">{!! ($parentName != null) ? $parentName->name : 'None' !!}
                         </div>
                     </div>
                     <div class="row">

@@ -5,6 +5,8 @@ namespace truonghoc\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use truonghoc\Category;
+use truonghoc\Http\Requests\CategoryStoreRequest;
+use truonghoc\Http\Requests\CategoryUpdateRequest;
 
 class CategoryController extends Controller
 {
@@ -28,7 +30,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return 'create';
+//        Tat ca cai nao co the la parent
+        $parentAbles = Category::select('id', 'name')->where('parent_id', 0)->get();
+        return view('backend.category.create')
+            ->with('parentAbles', $parentAbles);
     }
 
     /**
@@ -37,9 +42,23 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
-        return 'store';
+        $category = new Category();
+        $category->name = $request->input('name');
+        $category->alias = str_slug($request->input('name'));
+        $category->order = $request->input('order');
+        $category->parent_id = $request->input('parent_id');
+        $category->keywords = $request->input('keywords');
+        $category->description = $request->input('description');
+//        Lua chon hanh dong [rat hay]
+        if ($request->get('action') === 'save') {
+            $category->save();
+            return redirect()->route('category.create');
+        } elseif ($request->get('action') === 'save_and_close') {
+            $category->save();
+            return redirect()->route('category.index');
+        }
     }
 
     /**
@@ -65,7 +84,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        return 'edit';
+        $category = Category::find($id);
+//        Co the la parent ngoai chinh no
+        $parentAbles = Category::select('id', 'name')->where('parent_id', 0)->where('name', '!=', $category->name)->get();
+        return view('backend.category.edit')
+            ->with('category', $category)
+            ->with('parentAbles', $parentAbles);
     }
 
     /**
@@ -75,9 +99,23 @@ class CategoryController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryUpdateRequest $request, $id)
     {
-        return 'update';
+        $category = Category::find($id);
+        $category->name = $request->input('name');
+        $category->alias = str_slug($request->input('name'));
+        $category->order = $request->input('order');
+        $category->parent_id = $request->input('parent_id');
+        $category->keywords = $request->input('keywords');
+        $category->description = $request->input('description');
+//        Lua chon hanh dong [rat hay]
+        if ($request->get('action') == 'save_and_close') {
+            $category->save();
+            return redirect()->route('category.index');
+        } elseif ($request->get('action') == 'save_and_show') {
+            $category->save();
+            return redirect()->route('category.show', $id);
+        }
     }
 
     /**

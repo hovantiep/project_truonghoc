@@ -27,7 +27,7 @@
                 <div class="form-group row">
                     <label for="example-number-input" class="col-2 col-form-label">Order</label>
                     <div class="col-10">
-                        <input class="form-control" type="number" value="{!! old('order') !!}" id="example-number-input" name="order">
+                        <input class="form-control" type="number" value="{!! old('order', 1) !!}" id="example-number-input" name="order">
                     </div>
                 </div>
                 <div class="form-group row">

@@ -16,7 +16,7 @@
             {{--Displaying The Validation Errors--}}
             @include('backend.partials.validate_errors')
             {{--End Displaying The Validation Errors--}}
-            <form action="{{ route('slide.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="example-text-input" class="col-2 col-form-label">Name</label>
                     <div class="col-10">
@@ -25,31 +25,42 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="example-text-input" class="col-2 col-form-label">Parent</label>
+                    <div class="col-10">
+                        <select class="form-control" id="parent_id" name="parent_id">
+                            <option value=0>None</option>
+                            @foreach($parentAbles as $parentAble)
+                                <option value="{{ $parentAble->id }}" {{ old('parent_id') == $parentAble->id ? 'selected' : '' }}>{{ $parentAble->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class=" form-group row">
                     <label for="example-number-input" class="col-2 col-form-label">Order</label>
                     <div class="col-10">
-                        <input class="form-control" type="number" value="{!! old('order') !!}" id="example-number-input"
+                        <input class="form-control" type="number" value="{!! old('order', 1) !!}"
+                               id="example-number-input"
                                name="order">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputFile" class="col-2">Image</label>
-                    <input type="file" accept="image/*" class="form-control-file col-10" id="exampleInputFile"
-                           aria-describedby="fileHelp" name="image">
-                    <small id="fileHelp" class="form-text text-muted col-10 offset-2">This is some placeholder
-                        block-level help text for the above input. It's a bit lighter and easily wraps to a new line.
-                    </small>
+                    <label for="example-url-input" class="col-2 col-form-label">Keywords</label>
+                    <div class="col-10">
+                        <input class="form-control" type="text" value="{!! old('keywords') !!}"
+                               id="example-url-input" name="keywords">
+                    </div>
                 </div>
                 <div class="form-group row">
-                    <label for="example-url-input" class="col-2 col-form-label">Link</label>
+                    <label for="example-url-input" class="col-2 col-form-label">Description</label>
                     <div class="col-10">
-                        <input class="form-control" type="url" value="{!! old('link',asset('/')) !!}"
-                               id="example-url-input" name="link">
+                        <input class="form-control" type="text" value="{!! old('description') !!}"
+                               id="example-url-input" name="description">
                     </div>
                 </div>
                 <button type="submit" name="action" value="save" class="btn btn-primary offset-2">Save</button>
                 <button type="submit" name="action" value="save_and_close" class="btn btn-success">Save &amp; Close
                 </button>
-                <a href="{{ route('slide.index') }}" class="btn btn-danger">Close</a>
+                <a href="{{ route('category.index') }}" class="btn btn-danger">Close</a>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
         </div>
