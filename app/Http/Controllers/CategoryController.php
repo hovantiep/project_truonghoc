@@ -18,6 +18,22 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all()->sortByDesc('id');
+
+        function Cate($arrCate)
+        {
+            $a = [];
+            foreach ($arrCate as $item)
+                if ($item['parent_id'] == 0) {
+                    $a[$item['id']][] = $item;
+                    foreach ($arrCate as $ti2) {
+                        if ($ti2['parent_id'] == $item['id']) {
+                            $a[$item['id']][] = $ti2;
+                        }
+                    };
+                }
+            return $a;
+        }
+
         return view('backend.category.index')
             ->with('categories', $categories)
             ->with('i', $i = 1);
@@ -53,12 +69,17 @@ class CategoryController extends Controller
         $category->description = $request->input('description');
 //        Lua chon hanh dong [rat hay]
         if ($request->get('action') === 'save') {
-            $category->save();
+            if ($category->save()) {
+                session()->put('success', 'Item created successfully.');
+            }
             return redirect()->route('category.create');
         } elseif ($request->get('action') === 'save_and_close') {
-            $category->save();
+            if ($category->save()) {
+                session()->put('success', 'Item created successfully.');
+            }
             return redirect()->route('category.index');
         }
+        return redirect()->route('category.index');
     }
 
     /**
@@ -110,12 +131,17 @@ class CategoryController extends Controller
         $category->description = $request->input('description');
 //        Lua chon hanh dong [rat hay]
         if ($request->get('action') == 'save_and_close') {
-            $category->save();
+            if ($category->save()) {
+                session()->put('success', 'Item update successfully.');
+            }
             return redirect()->route('category.index');
         } elseif ($request->get('action') == 'save_and_show') {
-            $category->save();
+            if ($category->save()) {
+                session()->put('success', 'Item update successfully.');
+            }
             return redirect()->route('category.show', $id);
         }
+        return redirect()->route('category.index');
     }
 
     /**
@@ -126,7 +152,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::find($id)->delete();
+        $category = Category::find($id);
+//        Xem co chua con khong ?
+        $child = Category::where('parent_id', $id)->count();
+        if ($child == 0) {
+            if ($category->delete()) {
+                session()->put('success', 'Delete item successfully.');
+            }
+        } elseif ($child > 0) {
+            session()->put('error', 'Delete item failed.');
+        }
         return redirect()->route('category.index');
     }
 }

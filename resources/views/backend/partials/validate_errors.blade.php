@@ -8,7 +8,6 @@
                     @endforeach
                 </ul>
             </div>
-
         </div>
     </div>
 @endif

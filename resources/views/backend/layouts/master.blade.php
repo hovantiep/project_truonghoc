@@ -293,6 +293,9 @@
 
 <!-- Bootstrap core JavaScript-->
 <script src="{{asset('public/backend/vendor/jquery/jquery.min.js')}}"></script>
+<!-- toastr-->
+@include('backend.partials.notification')
+<!-- my js-->
 <script src="{{asset('public/backend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- Core plugin JavaScript-->
 <script src="{{asset('public/backend/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -305,7 +308,6 @@
 <!-- Custom scripts for this page-->
 <script src="{{asset('public/backend/js/sb-admin-datatables.min.js')}}"></script>
 <script src="{{asset('public/backend/js/sb-admin-charts.min.js')}}"></script>
-<!-- myjs-->
 <script src="{{asset('public/backend/js/my.js')}}"></script>
 </body>
 

@@ -57,12 +57,17 @@ class SlideController extends Controller
         };
 //        Lua chon hanh dong [rat hay]
         if ($request->get('action') === 'save') {
-            $slide->save();
+            if ($slide->save()) {
+                session()->put('success', 'Item created successfully.');
+            };
             return redirect()->route('slide.create');
         } elseif ($request->get('action') === 'save_and_close') {
-            $slide->save();
+            if ($slide->save()) {
+                session()->put('success', 'Item created successfully.');
+            };
             return redirect()->route('slide.index');
         }
+        return redirect()->route('slide.index');
     }
 
     /**
@@ -123,12 +128,17 @@ class SlideController extends Controller
         }
 //        Lua chon hanh dong [rat hay]
         if ($request->get('action') == 'save_and_close') {
-            $slide->save();
+            if ($slide->save()) {
+                session()->put('success', 'Item update successfully.');
+            };
             return redirect()->route('slide.index');
         } elseif ($request->get('action') == 'save_and_show') {
-            $slide->save();
+            if ($slide->save()) {
+                session()->put('success', 'Item update successfully.');
+            };
             return redirect()->route('slide.show', $id);
         }
+        return redirect()->route('slide.index');
     }
 
     /**
@@ -144,8 +154,14 @@ class SlideController extends Controller
         $delImg = 'resources/upload/slide/' . $slide->image;
         if (\File::exists($delImg)) {
             \File::delete($delImg);
+        } else {
+            session()->put('warning', 'Image not exists.');
         }
-        $slide->delete();
+        if ($slide->delete()) {
+            session()->put('success', 'Delete item successfully.');
+            return redirect()->route('slide.index');
+        };
+        session()->put('error', 'Delete item failed.');
         return redirect()->route('slide.index');
     }
 }
