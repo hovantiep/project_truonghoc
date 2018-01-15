@@ -99,7 +99,9 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $news = News::find($id);
+        $types = Category::all();
+        return view('backend.news.edit', compact('news'), compact('types'));
     }
 
     /**
@@ -111,11 +113,17 @@ class NewsController extends Controller
      */
     public function update(NewsUpdateRequest $request, $id)
     {
-        $news = Slide::find($id);
-        $news->name = $request->input('name');
+        $news = News::find($id);
+        $news->title = $request->input('title');
+        $news->category_id = $request->input('category_id');
+        $news->alias = str_slug($request->input('title'));
         $news->order = $request->input('order');
-        $news->link = $request->input('link');
-//        Thay doi hinh
+        $news->intro = $request->input('intro');
+        $news->content = $request->input('content');
+        $news->keywords = $request->input('keywords');
+        $news->highlights = ($request->input('highlights') != null) ? 1 : 0;
+//        Thay doi hinh (su dung bien toan cuc cho if sau)
+        $imageName = '';
         if (!empty($request->file('image'))) {
             $image = $request->file('image');
             $image_name = $image->getClientOriginalName();
@@ -123,29 +131,24 @@ class NewsController extends Controller
             $onlyName = pathinfo($image_name, PATHINFO_FILENAME);
             $extension = pathinfo($image_name, PATHINFO_EXTENSION);
             $image_newName = str_slug($onlyName) . "-" . str_random() . "." . $extension;
-            $image->move('resources/upload/slide/', $image_newName);
 //        Xoa file cu
-            $delImg = 'resources/upload/slide/' . $news->image;
+            $delImg = 'resources/upload/news/' . $news->image;
             if (\File::exists($delImg)) {
                 \File::delete($delImg);
+            } else {
+                session()->put('warning', 'File not exists.');
             }
 //        Luu file moi
             $news->image = $image_newName;
+            $image->move('resources/upload/news/', $image_newName);
         }
-//        Lua chon hanh dong [rat hay]
-        if ($request->get('action') == 'save_and_close') {
-            if ($slide->save()) {
-                session()->put('success', 'Item update successfully.');
-            };
-            return redirect()->route('slide.index');
-        } elseif ($request->get('action') == 'save_and_show') {
-            if ($slide->save()) {
-                session()->put('success', 'Item update successfully.');
-            };
-            return redirect()->route('slide.show', $id);
+//        Lua chon hanh dong khong duoc do xung dot textboxio
+        if ($news->save()) {
+            session()->put('success', 'Item update successfully.');
+        } else {
+            session()->put('success', 'Item update fail.');
         }
-        session()->put('success', 'Item update fail.');
-        return redirect()->route('slide.index');
+        return redirect()->route('news.index');
     }
 
     /**

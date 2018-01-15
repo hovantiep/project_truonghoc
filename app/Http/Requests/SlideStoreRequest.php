@@ -26,8 +26,8 @@ class SlideStoreRequest extends FormRequest
         return [
             'name' => 'required|unique:slides,name|max:255',
             'order' => 'required',
-            'image' => 'required|image',
-            'link' => 'required',
+            'image' => 'required|image|max:255',
+            'link' => 'required|max:255',
         ];
     }
 }

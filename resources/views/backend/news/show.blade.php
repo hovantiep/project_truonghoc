@@ -45,17 +45,17 @@
                     </div>
                     <div class="row">
                         <label for="keywords" class="col-2">Highlights</label>
-                        <div class="col-10">{{ $news->highlights }}
+                        <div class="col-10">{{ ($news->highlights == true)?'Yes':'No' }}
                         </div>
                     </div>
                     <div class="row">
                         <label for="order" class="col-2">Image</label>
-                        <div class="col-10"><img src="{{ asset('resources/upload/news/'.$news->alias) }}"
-                                                 alt="image"></div>
+                        <div class="col-10"><img src="{{ asset('resources/upload/news/'.$news->image) }}"
+                                                 alt="image" class="img-responsive img-thumbnail size-image-8"></div>
                     </div>
                     <div class="row">
-                        <label for="keywords" class="col-2">Content</label>
-                        <div class="col-10 content-view">{!!$news->content  !!}</div>
+                        <label for="keywords" class="col-10">Content</label>
+                        <div class="col-12 content-view">{!!$news->content  !!}</div>
                     </div>
                     <div class="form-group row">
                         <div class="offset-2 col-10">

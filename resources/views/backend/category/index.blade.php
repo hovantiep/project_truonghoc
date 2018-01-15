@@ -29,7 +29,7 @@
                         <th>Name</th>
                         <th>Order</th>
                         <th>Parent</th>
-                        <th>Actions</th>
+                        <th width="90px">Actions</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -60,14 +60,18 @@
                             </td>
                             <td class="text-center">
                                 <a href="{{ route('category.show',$category->id) }}"
-                                   class="btn btn-sm btn-info">Show</a>
+                                   class="btn btn-sm btn-info"><i
+                                            class="fa fa-eye" aria-hidden="true"></i></a>
                                 <a href="{{ route('category.edit',$category->id) }}"
-                                   class="btn btn-sm btn-warning">Edit</a>
+                                   class="btn btn-sm btn-warning"><i
+                                            class="fa fa-pencil-square-o"
+                                            aria-hidden="true"></i></a>
                                 <div class="btn btn-sm p-0 m-0">
                                     <form action="{{ route('category.destroy',$category->id) }}" method="POST">
                                         <button type="submit" name="action" value="delete"
                                                 class="btn btn-sm btn-danger"
-                                                onclick="return confirmDel('Are you sure delete record ?')">Delete
+                                                onclick="return confirmDel('Are you sure delete record ?')"><i
+                                                    class="fa fa-trash-o" aria-hidden="true"></i>
                                         </button>
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" name="_method" value="DELETE"/>

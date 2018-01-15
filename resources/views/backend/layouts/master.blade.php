@@ -18,6 +18,8 @@
     <link href="{{asset('public/backend/css/sb-admin.css')}}" rel="stylesheet">
     <!-- my.css-->
     <link href="{{asset('public/backend/css/my.css')}}" rel="stylesheet">
+    {{--Font awesome--}}
+    <link href="{{asset('public/backend/css/font-awesome.min.css')}}" rel="stylesheet">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark sidenav-toggled" id="page-top">

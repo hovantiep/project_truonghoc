@@ -26,8 +26,8 @@ class SlideUpdateRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'order' => 'required',
-            'image' => 'image',
-            'link' => 'required',
+            'image' => 'image|max:255',
+            'link' => 'required|max:255',
         ];
     }
 }

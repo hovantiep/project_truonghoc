@@ -26,8 +26,8 @@ class CategoryUpdateRequest extends FormRequest
         return [
             'name' => 'required|max:50',
             'order' => 'required',
-            'keywords' => 'required',
-            'description' => 'required',
+            'keywords' => 'required|max:255',
+            'description' => 'required|max:255',
         ];
     }
 }

@@ -26,8 +26,8 @@ class CategoryStoreRequest extends FormRequest
         return [
             'name' => 'required|unique:categories,name|max:50',
             'order' => 'required',
-            'keywords' => 'required',
-            'description' => 'required',
+            'keywords' => 'required|max:255',
+            'description' => 'required|max:255',
         ];
     }
 }
