@@ -46,6 +46,8 @@ class SlideController extends Controller
         $slide->link = $request->input('link');
 //        Luu file anh
         $image = $request->file('image');
+//        Su dung de luu ten dung cho if sau
+        $imageName = '';
         if (isset($image)) {
             $image_name = $image->getClientOriginalName();
 //            Doi ten file
@@ -53,19 +55,19 @@ class SlideController extends Controller
             $extension = pathinfo($image_name, PATHINFO_EXTENSION);
             $image_newName = str_slug($onlyName) . "-" . str_random() . "." . $extension;
             $slide->image = $image_newName;
-            $image->move('resources/upload/slide/', $image_newName);
+            $imageName = $image_newName;
         };
 //        Lua chon hanh dong [rat hay]
         if ($request->get('action') === 'save') {
             if ($slide->save()) {
+                $image->move('resources/upload/slide/', $imageName);
                 session()->put('success', 'Item created successfully.');
             };
-            return redirect()->route('slide.create');
         } elseif ($request->get('action') === 'save_and_close') {
             if ($slide->save()) {
+                $image->move('resources/upload/slide/', $imageName);
                 session()->put('success', 'Item created successfully.');
             };
-            return redirect()->route('slide.index');
         }
         return redirect()->route('slide.index');
     }
@@ -138,6 +140,7 @@ class SlideController extends Controller
             };
             return redirect()->route('slide.show', $id);
         }
+        session()->put('success', 'Item update fail.');
         return redirect()->route('slide.index');
     }
 

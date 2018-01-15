@@ -55,8 +55,7 @@
                     </div>
                     <div class="row">
                         <label for="keywords" class="col-2">Content</label>
-                        <div class="col-10">{{ $news->content }}
-                        </div>
+                        <div class="col-10 content-view">{!!$news->content  !!}</div>
                     </div>
                     <div class="form-group row">
                         <div class="offset-2 col-10">

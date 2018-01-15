@@ -76,16 +76,25 @@
                 <div class="form-group row">
                     <label for="example-url-input" class="col-2 col-form-label">Content</label>
                     <div class="col-10">
-                        <input class="form-control" type="text" value="{!! old('content') !!}"
-                               id="example-url-input" name="content">
+                        <textarea class="form-control" id="content"
+                                  name="content"
+                                  rows="5">{!! old('content') !!}
+                        </textarea>
                     </div>
                 </div>
-                <button type="submit" name="action" value="save" class="btn btn-primary offset-2">Save</button>
-                <button type="submit" name="action" value="save_and_close" class="btn btn-success">Save &amp; Close
+                <button type="submit" id="action" name="action" value="save_and_close" class="btn btn-success offset-2">
+                    Save &amp; Close
                 </button>
                 <a href="{{ route('news.index') }}" class="btn btn-danger">Close</a>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
         </div>
     </div>
+    <script type="text/javascript"
+            src="{{ asset('public/backend/vendor/textboxio/textboxio.js') }}">
+    </script>
+    <script>
+        // Create a Textbox.io Editor for the matched element(s)
+        var textareaEditor = textboxio.replace('#content');
+    </script>
 @endsection

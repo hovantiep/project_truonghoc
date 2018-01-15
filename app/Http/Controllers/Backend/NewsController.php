@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use truonghoc\Category;
 use truonghoc\Http\Controllers\Controller;
 use truonghoc\Http\Requests\NewsStoreRequest;
+use truonghoc\Http\Requests\NewsUpdateRequest;
 use truonghoc\News;
 
 class NewsController extends Controller
@@ -56,6 +57,8 @@ class NewsController extends Controller
         $news->highlights = ($request->input('highlights') != null) ? 1 : 0;
 //        Luu file anh
         $image = $request->file('image');
+//        Su dung de luu ten dung cho if sau
+        $imageName = '';
         if (isset($image)) {
             $image_name = $image->getClientOriginalName();
 //            Doi ten file
@@ -63,19 +66,15 @@ class NewsController extends Controller
             $extension = pathinfo($image_name, PATHINFO_EXTENSION);
             $image_newName = str_slug($onlyName) . "-" . str_random() . "." . $extension;
             $news->image = $image_newName;
-            $image->move('resources/upload/news/', $image_newName);
+            $imageName = $image_newName;
         };
-//        Lua chon hanh dong [rat hay]
-        if ($request->get('action') === 'save') {
-            if ($news->save()) {
-                session()->put('success', 'Item created successfully.');
-            };
-            return redirect()->route('news.create');
-        } elseif ($request->get('action') === 'save_and_close') {
-            if ($news->save()) {
-                session()->put('success', 'Item created successfully.');
-            };
-            return redirect()->route('news.index');
+//        Lua chon hanh dong khong duoc do xung dot textboxio
+        if ($news->save()) {
+//            Luu duoc moi sao chep hinh anh (su dung ten toan cuc)
+            $image->move('resources/upload/news/', $imageName);
+            session()->put('success', 'Item created successfully.');
+        } else {
+            session()->put('danger', 'Item save fail.');
         }
         return redirect()->route('news.index');
     }
@@ -110,9 +109,43 @@ class NewsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NewsUpdateRequest $request, $id)
     {
-        //
+        $news = Slide::find($id);
+        $news->name = $request->input('name');
+        $news->order = $request->input('order');
+        $news->link = $request->input('link');
+//        Thay doi hinh
+        if (!empty($request->file('image'))) {
+            $image = $request->file('image');
+            $image_name = $image->getClientOriginalName();
+//            Doi ten file -> khi bi ghi de
+            $onlyName = pathinfo($image_name, PATHINFO_FILENAME);
+            $extension = pathinfo($image_name, PATHINFO_EXTENSION);
+            $image_newName = str_slug($onlyName) . "-" . str_random() . "." . $extension;
+            $image->move('resources/upload/slide/', $image_newName);
+//        Xoa file cu
+            $delImg = 'resources/upload/slide/' . $news->image;
+            if (\File::exists($delImg)) {
+                \File::delete($delImg);
+            }
+//        Luu file moi
+            $news->image = $image_newName;
+        }
+//        Lua chon hanh dong [rat hay]
+        if ($request->get('action') == 'save_and_close') {
+            if ($slide->save()) {
+                session()->put('success', 'Item update successfully.');
+            };
+            return redirect()->route('slide.index');
+        } elseif ($request->get('action') == 'save_and_show') {
+            if ($slide->save()) {
+                session()->put('success', 'Item update successfully.');
+            };
+            return redirect()->route('slide.show', $id);
+        }
+        session()->put('success', 'Item update fail.');
+        return redirect()->route('slide.index');
     }
 
     /**

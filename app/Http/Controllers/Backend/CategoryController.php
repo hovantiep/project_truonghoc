@@ -71,12 +71,10 @@ class CategoryController extends Controller
             if ($category->save()) {
                 session()->put('success', 'Item created successfully.');
             }
-            return redirect()->route('category.create');
         } elseif ($request->get('action') === 'save_and_close') {
             if ($category->save()) {
                 session()->put('success', 'Item created successfully.');
             }
-            return redirect()->route('category.index');
         }
         return redirect()->route('category.index');
     }
@@ -140,6 +138,7 @@ class CategoryController extends Controller
             }
             return redirect()->route('category.show', $id);
         }
+        session()->put('success', 'Item update fail.');
         return redirect()->route('category.index');
     }
 
@@ -161,6 +160,7 @@ class CategoryController extends Controller
         } elseif ($child > 0) {
             session()->put('error', 'Delete item failed.');
         }
+        session()->put('success', 'Item delete fail.');
         return redirect()->route('category.index');
     }
 }
