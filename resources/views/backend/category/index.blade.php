@@ -3,7 +3,7 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{ route('admin') }}">Dashboard</a>
+            <a href="{{ route('dashboard.index') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
             <a href="{{ route('category.index') }}">Category</a>
@@ -25,7 +25,7 @@
                 <table class="table table-bordered" id="dataTable" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>STT</th>
+                        <th></th>
                         <th>Name</th>
                         <th>Order</th>
                         <th>Parent</th>
@@ -34,7 +34,7 @@
                     </thead>
                     <tfoot>
                     <tr>
-                        <th>STT</th>
+                        <th></th>
                         <th>Name</th>
                         <th>Order</th>
                         <th>Parent</th>

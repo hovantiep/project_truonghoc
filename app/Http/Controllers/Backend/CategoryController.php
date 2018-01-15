@@ -1,9 +1,8 @@
 <?php
 
-namespace truonghoc\Http\Controllers;
+namespace truonghoc\Http\Controllers\Backend;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use truonghoc\Http\Controllers\Controller;
 use truonghoc\Category;
 use truonghoc\Http\Requests\CategoryStoreRequest;
 use truonghoc\Http\Requests\CategoryUpdateRequest;

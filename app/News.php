@@ -13,6 +13,11 @@ class News extends Model
      * @var array
      */
     protected $fillable = [
-        'category_id','title', 'alias','order', 'intro','content','image','highlights','views',
+        'category_id', 'title', 'alias', 'order', 'intro', 'keywords', 'content', 'image', 'highlights', 'views',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo('truonghoc\Category', 'category_id');
+    }
 }

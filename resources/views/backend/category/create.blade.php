@@ -3,7 +3,7 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{ route('admin') }}">Dashboard</a>
+            <a href="{{ route('dashboard.index') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
             <a href="{{ route('category.index') }}">Category</a>
@@ -16,7 +16,7 @@
             {{--Displaying The Validation Errors--}}
             @include('backend.partials.validate_errors')
             {{--End Displaying The Validation Errors--}}
-            <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('category.store') }}" method="POST">
                 <div class="form-group row">
                     <label for="example-text-input" class="col-2 col-form-label">Name</label>
                     <div class="col-10">

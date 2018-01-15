@@ -70,9 +70,9 @@ function strToSlug($str, $modeLower = 2)
  * @param int $parent
  * @param string $str
  */
-function generateSelect($data, $parent = 0, $str = "", $select = 0)
+function generateSelect($data, $parent = 0, $str = "#", $select = 0, $class = "text-danger")
 {
-    foreach ($data as $value) {
+    foreach ($data as $key => $value) {
         $id = $value->id;
         $name = $value->name;
         $parent_id = $value->parent_id;
@@ -80,9 +80,9 @@ function generateSelect($data, $parent = 0, $str = "", $select = 0)
             if ($select != 0 && $id == $select) {
                 echo "<option value='$id' selected='selected'>$str $name</option>";
             } else {
-                echo "<option value='$id'>$str $name</option>";
+                echo "<option class='$class' value='$id'>$str $name</option>";
             }
-            generateSelect($data, $id, $str . "+", $select);
+            generateSelect($data, $id, $str . "# # #", $select, "text-primary");
         }
     }
 }

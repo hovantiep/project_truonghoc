@@ -1,8 +1,8 @@
 <?php
 
-namespace truonghoc\Http\Controllers;
+namespace truonghoc\Http\Controllers\Backend;
 
-use Symfony\Component\Finder\SplFileInfo;
+use truonghoc\Http\Controllers\Controller;
 use truonghoc\Http\Requests\SlideStoreRequest;
 use truonghoc\Http\Requests\SlideUpdateRequest;
 use truonghoc\Slide;
@@ -150,15 +150,15 @@ class SlideController extends Controller
     public function destroy($id)
     {
         $slide = Slide::find($id);
-//        Xoa hinh
-        $delImg = 'resources/upload/slide/' . $slide->image;
-        if (\File::exists($delImg)) {
-            \File::delete($delImg);
-        } else {
-            session()->put('warning', 'Image not exists.');
-        }
         if ($slide->delete()) {
             session()->put('success', 'Delete item successfully.');
+//            Xoa hinh
+            $delImg = 'resources/upload/slide/' . $slide->image;
+            if (\File::exists($delImg)) {
+                \File::delete($delImg);
+            } else {
+                session()->put('warning', 'Image not exists.');
+            }
             return redirect()->route('slide.index');
         };
         session()->put('error', 'Delete item failed.');

@@ -14,4 +14,9 @@ class Category extends Model
     protected $fillable = [
         'name', 'alias', 'order', 'parent_id', 'keywords', 'description',
     ];
+
+    public function news()
+    {
+        return $this->hasMany('truonghoc\News', 'category_id', 'id');
+    }
 }

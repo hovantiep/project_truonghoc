@@ -23,7 +23,7 @@ class CreateNewsTable extends Migration
             $table->longText('content');
             $table->string('keywords',255)->nullable();
             $table->string('image',255)->nullable();
-            $table->unsignedInteger('highlights')->default(0);
+            $table->boolean('highlights')->default('false');
             $table->unsignedInteger('views')->default(0);
             $table->string('strAttr')->nullable();
             $table->integer('intAttr')->nullable();

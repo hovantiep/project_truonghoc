@@ -24,8 +24,10 @@ Route::get('html/{name}', function ($url) {
 });
 // Định tuyến cho phần backend
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-    Route::get('/', ['as' => 'admin', 'uses' => 'HomeController@dashboard']);
-
-    Route::resource('slide', 'SlideController');
-    Route::resource('category', 'CategoryController');
+//    Route::get('/', ['as' => 'admin', 'uses' => 'HomeController@dashboard']);
+    Route::resource('dashboard', 'Backend\DashboardController');
+    Route::resource('slide', 'Backend\SlideController');
+    Route::resource('category', 'Backend\CategoryController');
+    Route::resource('news', 'Backend\NewsController');
+    Route::resource('comment', 'Backend\CommentController');
 });

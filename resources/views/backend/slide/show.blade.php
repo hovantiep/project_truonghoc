@@ -3,7 +3,7 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{ route('admin') }}">Dashboard</a>
+            <a href="{{ route('dashboard.index') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
             <a href="{{ route('slide.index') }}">Slide</a>
