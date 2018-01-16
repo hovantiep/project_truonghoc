@@ -16,23 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all()->sortByDesc('id');
-
-        function Cate($arrCate)
-        {
-            $a = [];
-            foreach ($arrCate as $item)
-                if ($item['parent_id'] == 0) {
-                    $a[$item['id']][] = $item;
-                    foreach ($arrCate as $ti2) {
-                        if ($ti2['parent_id'] == $item['id']) {
-                            $a[$item['id']][] = $ti2;
-                        }
-                    };
-                }
-            return $a;
-        }
-
+        $categories = Category::all()->sortBy('parent_id');
         return view('backend.category.index')
             ->with('categories', $categories)
             ->with('i', $i = 1);
@@ -61,7 +45,7 @@ class CategoryController extends Controller
     {
         $category = new Category();
         $category->name = $request->input('name');
-        $category->alias = str_slug($request->input('name'));
+        $category->alias = str_slug($request->input('name'),'_');
         $category->order = $request->input('order');
         $category->parent_id = $request->input('parent_id');
         $category->keywords = $request->input('keywords');
@@ -70,6 +54,7 @@ class CategoryController extends Controller
         if ($request->get('action') === 'save') {
             if ($category->save()) {
                 session()->put('success', 'Item created successfully.');
+                return redirect()->route('category.create');
             }
         } elseif ($request->get('action') === 'save_and_close') {
             if ($category->save()) {
@@ -121,7 +106,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->name = $request->input('name');
-        $category->alias = str_slug($request->input('name'));
+        $category->alias = str_slug($request->input('name'),'_');
         $category->order = $request->input('order');
         $category->parent_id = $request->input('parent_id');
         $category->keywords = $request->input('keywords');

@@ -11,18 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('html/{name}', function ($url) {
-    return view('backend.' . $url);
-});
-// Định tuyến cho phần backend
+// Dinh tuyen cho backend
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 //    Route::get('/', ['as' => 'admin', 'uses' => 'HomeController@dashboard']);
     Route::resource('dashboard', 'Backend\DashboardController');
@@ -31,3 +28,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('news', 'Backend\NewsController');
     Route::resource('comment', 'Backend\CommentController');
 });
+
+// Dinh tuyen cho frontend
+Route::get('/', 'Frontend\HomeController@index')->name('home');
+Route::get('static/{slug}', 'Frontend\HomeController@showStatic')->name('static');
+// Hien thi the loai tin thuoc danh muc
+Route::get('/{category}/{slug}/{id}', 'Frontend\HomeController@showCategory')->name('category');
+// Hien thi 1 tin thuoc danh muc
+//Route::get('/category/{slug}/{id}', 'Frontend\HomeController@showDetail')->name('detail');
+
+// Test
+Route::get('/html/{name}', function ($url) {
+    return view('frontend.' . $url);
+});
+//Route::get('html/{name}', function ($url) {
+//    return view('backend.' . $url);
+//});
