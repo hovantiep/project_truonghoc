@@ -32,7 +32,7 @@ class HomeController extends Controller
         $news = DB::table('categories')
             ->join('news', 'news.category_id', '=', 'categories.id')
             ->where('categories.strAttr', 'news')
-            ->select('news.id', 'news.category_id', 'news.title', 'news.alias as slug', 'news.intro', 'news.image', 'categories.alias')
+            ->select('news.id', 'news.category_id', 'news.title', 'news.alias as slug', 'news.intro', 'news.image','categories.name', 'categories.alias', 'categories.id as categoryId')
             ->get();
         return view('frontend.index', compact('news'));
     }

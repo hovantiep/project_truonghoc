@@ -66,10 +66,11 @@
                                          alt="Generic placeholder image">
                                 </a>
                                 <div class="media-body text-justify">
-                                    <a href="#">
+                                    <a href="{{ route('news.detail',[$article->alias,$article->slug, $article->id]) }}">
                                         <h5 class="mt-0">{{ $article->title }}</h5>
                                     </a>
-                                    <a href="#" class="small text-muted">Tin tổng hợp</a><br>
+                                    <a href="{{ route('news',[$article->alias, $article->categoryId]) }}"
+                                       class="small text-muted">{{ $article->name }}</a><br>
                                     {{ $article->intro }}
                                 </div>
                             </div>
