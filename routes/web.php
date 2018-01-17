@@ -33,8 +33,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 // Trang chu
 Route::get('/', 'Frontend\HomeController@index')->name('home');
 
-// ------- Trang tinh ---------- //
-Route::get('static/{slug}', 'Frontend\HomeController@showStatic')->name('static');
+// ------- Hien thi trang tinh ---------- //
+Route::get('static/{slug}', 'Frontend\HomeController@static')->name('static');
+
+// -------- Hien thi Page (Trang rieng nam trong category) ---------- //
+Route::get('page/{type}/{id}', 'Frontend\HomeController@page')->name('page');
+
+// -------- Hien thi tat ca TIN TUC trong loai tin ------------- //
+Route::get('news/{type}/{id}', 'Frontend\HomeController@news')->name('news');
+Route::get('news_detail/{type}/{slug}/{id}', 'Frontend\HomeController@news_detail')->name('news.detail');
+
+// ------ Trang rieng biet nam tren level 0 (co them route name trong csdl +dac biet+) ------- //
+Route::get('thong_bao', 'Frontend\HomeController@thong_bao')->name('thong_bao');
+
 
 // ------- Tin tuc ---------- //
 // Hien thi tat ca TIN TUC trong loai tin
@@ -49,15 +60,20 @@ Route::get('hoat_dong/{type}/{id}', 'Frontend\HomeController@hoat_dong')->name('
 // Hien thi 1 HOAT DONG
 Route::get('hoat_dong_chi_tiet/{type}/{slug}/{id}', 'Frontend\HomeController@hoat_dong_chi_tiet')->name('hoat_dong_chi_tiet');
 
+
+// ------ Trang rieng biet nam o level 1 ------- //
 // Hien thi tat ca THUC DON
 Route::get('thuc_don/{type}/{id}', 'Frontend\HomeController@thuc_don')->name('thuc_don');
 
 // Hien thi 1 THUC DON
 Route::get('thuc_don_chi_tiet/{type}/{slug}/{id}', 'Frontend\HomeController@thuc_don_chi_tiet')->name('thuc_don_chi_tiet');
 
-// ------ Trang rieng biet ------- //
-// Hien thi THONG BAO
-Route::get('thong_bao', 'Frontend\HomeController@thong_bao')->name('thong_bao');
+// Hien thi tat ca THOI KHOA BIEU
+Route::get('thoi_khoa_bieu/{type}/{id}', 'Frontend\HomeController@thoi_khoa_bieu')->name('thoi_khoa_bieu');
+
+// Hien thi 1 THOI KHOA BIEU
+Route::get('thoi_khoa_bieu_chi_tiet/{type}/{slug}/{id}', 'Frontend\HomeController@thoi_khoa_bieu_chi_tiet')->name('thoi_khoa_bieu_chi_tiet');
+
 
 // Test
 Route::get('/html/{name}', function ($url) {

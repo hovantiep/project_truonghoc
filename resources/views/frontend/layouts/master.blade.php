@@ -60,7 +60,7 @@
                         {{-- Khong sub menu --}}
                         <li class="nav-item">
                             {{--<a class="nav-link" href="{{ asset('/static/'. $item_0->alias) }}">{{ $item_0->name }}</a>--}}
-                            <a class="nav-link" href="{{ $item_0->strAttr == '' ? route('static', $item_0->alias): route($item_0->strAttr)  }}">{{ $item_0->name }}</a>
+                            <a class="nav-link" href="{{ $item_0->strAttr != '' ? route($item_0->strAttr) : route('static', $item_0->alias) }}">{{ $item_0->name }}</a>
                         </li>
                     @endif
                 @endforeach
