@@ -50,6 +50,7 @@ class CategoryController extends Controller
         $category->parent_id = $request->input('parent_id');
         $category->keywords = $request->input('keywords');
         $category->description = $request->input('description');
+        $category->strAttr = $request->input('strAttr');
 //        Lua chon hanh dong [rat hay]
         if ($request->get('action') === 'save') {
             if ($category->save()) {
@@ -111,6 +112,7 @@ class CategoryController extends Controller
         $category->parent_id = $request->input('parent_id');
         $category->keywords = $request->input('keywords');
         $category->description = $request->input('description');
+        $category->strAttr = $request->input('strAttr');
 //        Lua chon hanh dong [rat hay]
         if ($request->get('action') == 'save_and_close') {
             if ($category->save()) {

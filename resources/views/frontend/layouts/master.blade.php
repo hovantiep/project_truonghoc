@@ -20,7 +20,7 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <!-- <div class="container"> -->
     <div class="container">
-        <a class="navbar-brand" href="{{ url('home') }}">
+        <a class="navbar-brand" href="{{ url('/') }}">
             <i class="fa fa-home" aria-hidden="true"></i>
         </a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
@@ -51,14 +51,16 @@
                                  aria-labelledby="navbarDropdown{{ $item_0->id }}">
                                 @foreach($level_1 as $item_1)
                                     <a class="dropdown-item"
-                                       href="{{ url('/',[$item_0->alias, $item_1->alias, $item_1->id]) }}">{{ $item_1->name }}</a>
+                                       {{-- Neu co route name thi sinh route, khong co thi sinh # --}}
+                                       href="{{ $item_1->strAttr != '' ? route($item_1->strAttr, [$item_1->alias, $item_1->id]) : '#' }}">{{ $item_1->name }}</a>
                                 @endforeach
                             </div>
                         </li>
                     @else
                         {{-- Khong sub menu --}}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ asset('/static/'. $item_0->alias) }}">{{ $item_0->name }}</a>
+                            {{--<a class="nav-link" href="{{ asset('/static/'. $item_0->alias) }}">{{ $item_0->name }}</a>--}}
+                            <a class="nav-link" href="{{ $item_0->strAttr == '' ? route('static', $item_0->alias): route($item_0->strAttr)  }}">{{ $item_0->name }}</a>
                         </li>
                     @endif
                 @endforeach

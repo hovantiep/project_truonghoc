@@ -28,6 +28,7 @@
                         <th></th>
                         <th>Name</th>
                         <th>Order</th>
+                        <th>Route name</th>
                         <th>Parent</th>
                         <th width="90px">Actions</th>
                     </tr>
@@ -37,6 +38,7 @@
                         <th></th>
                         <th>Name</th>
                         <th>Order</th>
+                        <th>Route name</th>
                         <th>Parent</th>
                         <th>Actions</th>
                     </tr>
@@ -47,6 +49,7 @@
                             <td class="text-center">{{ $i++ }}</td>
                             <td {{ ($category->parent_id == 0) ? "class=text-primary" : "" }}>{{ $category->name }}</td>
                             <td class="text-center">{{ $category->order }}</td>
+                            <td>{{ $category->strAttr }}</td>
                             <td>
                                 @if($category->parent_id == 0)
                                     {{ "None" }}

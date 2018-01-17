@@ -46,6 +46,13 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="example-url-input" class="col-2 col-form-label">Route name</label>
+                    <div class="col-10">
+                        <input class="form-control" type="text" value="{!! old('strAttr',$category->strAttr) !!}"
+                               id="example-url-input" name="strAttr">
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="example-url-input" class="col-2 col-form-label">Keywords</label>
                     <div class="col-10">
                         <input class="form-control" type="text" value="{!! old('keywords',$category->keywords) !!}"
