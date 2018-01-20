@@ -40,7 +40,7 @@ class NewsUpdateRequest extends FormRequest
             'intro' => 'required|max:255',
             'content' => 'required',
             'keywords' => 'required|max:255',
-//            'image' => 'image|max:2048', //2MB  toi uu => //255kB = 0,25MB
+            'image' => 'image|max:2048', //2MB  toi uu => //255kB = 0,25MB
         ];
     }
 }

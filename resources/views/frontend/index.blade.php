@@ -61,7 +61,7 @@
                             <div class="media">
                                 <a href="{{ route('news.detail',[$article->alias,$article->slug, $article->id]) }}">
                                     {{-- Hinh 180x150 --}}
-                                    <img class="d-flex mr-3 pt-25" width="180px" height="150px"
+                                    <img class="d-flex mr-3 pt-25 img-responsive img-180x150"
                                          src="{{ asset('resources/upload/news/'.$article->image) }}"
                                          alt="Generic placeholder image">
                                 </a>
@@ -245,36 +245,13 @@
                     </a>
                     <!-- thong bao trong thang -->
                     <div class="card-body overflow">
-                        <p>
-                            <a href="#">1. Lịch nghỉ tết
-                                <span class="badge badge-danger">New</span>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="#">2. Lịch trực đêm
-                                <span class="badge badge-danger">New</span>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="#">3. Ngày nghỉ trong tuần
-                                <span class="badge badge-danger">New</span>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="#">4. Triệu tập</a>
-                        </p>
-                        <p>
-                            <a href="#">5. Triệu tập</a>
-                        </p>
-                        <p>
-                            <a href="#">6. Triệu tập</a>
-                        </p>
-                        <p>
-                            <a href="#">7. Triệu tập</a>
-                        </p>
-                        <p>
-                            <a href="#">8. Triệu tập</a>
-                        </p>
+                        @foreach( $alerts as $key => $alert)
+                            <p>
+                                <a href="#">{{ ++$key }}. {{ $alert->title }}
+                                    <span class="badge badge-danger">New</span>
+                                </a>
+                            </p>
+                        @endforeach
                     </div>
                 </div>
                 <!-- News docunents Widget -->

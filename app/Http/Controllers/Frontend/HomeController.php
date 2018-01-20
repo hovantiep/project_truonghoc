@@ -29,12 +29,27 @@ class HomeController extends Controller
     public function index()
     {
 //        Tim ra nhom tin tuc (co route[strAttr] la news)
+        $filter = 'news';
         $news = DB::table('categories')
             ->join('news', 'news.category_id', '=', 'categories.id')
-            ->where('categories.strAttr', 'news')
-            ->select('news.id', 'news.category_id', 'news.title', 'news.alias as slug', 'news.intro', 'news.image','categories.name', 'categories.alias', 'categories.id as categoryId')
+            ->where('categories.strAttr', $filter)
+            ->select('news.id', 'news.category_id', 'news.title', 'news.alias as slug', 'news.intro', 'news.image', 'categories.name', 'categories.alias', 'categories.id as categoryId')
             ->get();
-        return view('frontend.index', compact('news'));
+
+//        Thong bao
+        $keyword = 'thong_bao';
+        $alerts = DB::table('categories')
+            ->join('news', 'news.category_id', '=', 'categories.id')
+            ->where('categories.alias', $keyword)
+            ->select('news.id', 'news.category_id', 'news.title', 'news.alias as slug', 'news.intro', 'news.image', 'news.created_at',
+                'categories.name', 'categories.alias', 'categories.id as categoryId')
+            ->take(5)
+            ->orderBy('created_at','DES')
+            ->get();
+        return view('frontend.index',
+            compact('news'),
+            compact('alerts')
+        );
     }
 
     /**
@@ -42,13 +57,13 @@ class HomeController extends Controller
      * @param $slug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function static($slug)
+    public function staticPage($slug)
     {
-        $view = 'frontend.' . $slug;
+        $view = 'frontend.static.' . $slug;
         if (view()->exists($view)) {
             return view($view);
         }
-        return view('frontend.404');
+        return view('frontend.static.404');
     }
 
     /**
@@ -75,7 +90,6 @@ class HomeController extends Controller
 //        Tim parentName khi biet $id cua category
         $parentID = DB::table('categories')->where('id', $id)->first()->parent_id; //47
         $parentName = Category::select('alias')->where('id', $parentID)->first()->alias; // tin_tuc
-
 //        $route = Route::currentRouteName();
 //        Hien thi view dang hoat_dong, tin_tuc
         $view = 'frontend.news.' . $parentName;
@@ -94,12 +108,35 @@ class HomeController extends Controller
 //        Tim parentName khi biet $type cua category
         $parentID = DB::table('categories')->where('alias', $type)->first()->parent_id; //47
         $parentName = Category::select('alias')->where('id', $parentID)->first()->alias; // tin_tuc
+
+//        Cap nhat luot xem
+        $news = News::find($id);
+        $news->views = $news->views + 1;
+        $news->save();
+
 //        Hien thi view dang hoat_dong_detail, tin_tuc_detail
         $view = 'frontend.news.' . $parentName . '_detail';
         if (view()->exists($view)) {
             return view($view);
         }
-        return view('frontend.404');
+        return view('frontend.static.404');
+    }
+
+    /**
+     * Hien thi cac loai trang (thuoc common route), view co tinh ke thua, dung chung layout
+     * @param $type
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function common($type, $id) //van ban,... // id cua category
+    {
+//        Tim parentName khi biet $id cua category
+        $parentID = DB::table('categories')->where('id', $id)->first()->parent_id; //47
+        $parentName = Category::select('alias')->where('id', $parentID)->first()->alias; // van_ban
+
+//        Hien thi view dang van ban, ...
+        $view = 'frontend.common.' . $parentName . '_' . $type;
+        return view($view);
     }
 
     /**
@@ -112,24 +149,5 @@ class HomeController extends Controller
         $view = 'frontend.category.' . $route;
         return 'thongbao.html';
     }
-//
-//    public function showCategory($category, $type, $id)
-//    {
-//        // Hien thi trang category the tung the loai (tin tuc, hoat dong, tai nguyen...)
-//        $view = 'frontend.category.' . $category;
-//        if (view()->exists($view)) {
-//            return view($view);
-//        }
-//        return '404';
-//    }
-//
-//    public function showDetail($category, $type, $id)
-//    {
-//        // Hien thi trang chi tiet theo tung danh muc, tung the loai
-//        $view = 'frontend.category.' . $category . '_detail';
-//        if (view()->exists($view)) {
-//            return view($view);
-//        }
-//        return '404';
-//    }
+
 }

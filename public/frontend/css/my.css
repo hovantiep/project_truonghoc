@@ -97,3 +97,7 @@ nav {
 
 
 /*  */
+.img-180x150 {
+  max-width: 180px;
+  max-height: 150px;
+}

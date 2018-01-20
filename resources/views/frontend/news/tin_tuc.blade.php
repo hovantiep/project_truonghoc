@@ -30,7 +30,7 @@
                                     Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate
                                     voluptatibus
                                     possimus, veniam magni quis!</p>
-                                <a href="{{ route('tin_tuc_chi_tiet',['noibo','slug',20]) }}" class="btn btn-danger btn-sm">Read
+                                <a href="#" class="btn btn-danger btn-sm">Read
                                     More &rarr;</a>
                             </div>
                         </div>
