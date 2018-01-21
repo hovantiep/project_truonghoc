@@ -19,8 +19,6 @@ class CreateCommentsTable extends Migration
             $table->unsignedInteger('news_id');
             $table->string('content',255);
             $table->smallInteger('order')->default(100);
-            $table->string('strAttr')->nullable();
-            $table->integer('intAttr')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

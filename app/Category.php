@@ -12,7 +12,7 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'alias', 'order', 'parent_id', 'keywords', 'description',
+        'name', 'alias', 'order', 'parent_id', 'keywords', 'description', 'route'
     ];
 
     public function news()

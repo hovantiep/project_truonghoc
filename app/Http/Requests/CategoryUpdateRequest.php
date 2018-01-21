@@ -28,6 +28,7 @@ class CategoryUpdateRequest extends FormRequest
             'order' => 'required',
             'keywords' => 'required|max:255',
             'description' => 'required|max:255',
+            'route' => 'max:255',
         ];
     }
 }

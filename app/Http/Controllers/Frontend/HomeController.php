@@ -28,12 +28,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        Tim ra nhom tin tuc (co route[strAttr] la news)
+//        Tim ra nhom tin tuc (co route la news)
         $filter = 'news';
         $news = DB::table('categories')
             ->join('news', 'news.category_id', '=', 'categories.id')
-            ->where('categories.strAttr', $filter)
-            ->select('news.id', 'news.category_id', 'news.title', 'news.alias as slug', 'news.intro', 'news.image', 'categories.name', 'categories.alias', 'categories.id as categoryId')
+            ->where('categories.route', $filter)
+            ->orderBy('created_at', 'DES')
+            ->select('news.id', 'news.category_id', 'news.title', 'news.alias as slug', 'news.intro', 'news.image', 'news.created_at',
+                'categories.name', 'categories.alias', 'categories.id as categoryId')
+            ->take(5)
             ->get();
 
 //        Thong bao
@@ -44,7 +47,7 @@ class HomeController extends Controller
             ->select('news.id', 'news.category_id', 'news.title', 'news.alias as slug', 'news.intro', 'news.image', 'news.created_at',
                 'categories.name', 'categories.alias', 'categories.id as categoryId')
             ->take(5)
-            ->orderBy('created_at','DES')
+            ->orderBy('created_at', 'DES')
             ->get();
         return view('frontend.index',
             compact('news'),

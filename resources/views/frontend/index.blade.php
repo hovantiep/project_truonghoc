@@ -248,7 +248,9 @@
                         @foreach( $alerts as $key => $alert)
                             <p>
                                 <a href="#">{{ ++$key }}. {{ $alert->title }}
-                                    <span class="badge badge-danger">New</span>
+                                    {{-- Neu trong ngay thi hien thi nut new canh bao --}}
+                                    @if(time() - strtotime($alert->created_at) <= 86400)
+                                        <span class="badge badge-danger">New</span>@endif
                                 </a>
                             </p>
                         @endforeach

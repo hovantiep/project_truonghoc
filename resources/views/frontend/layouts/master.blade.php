@@ -52,7 +52,7 @@
                                 @foreach($level_1 as $item_1)
                                     <a class="dropdown-item"
                                        {{-- Neu co route name thi sinh route, khong co thi sinh # --}}
-                                       href="{{ $item_1->strAttr != '' ? route($item_1->strAttr, [$item_1->alias, $item_1->id]) : '#' }}">{{ $item_1->name }}</a>
+                                       href="{{ $item_1->route != '' ? route($item_1->route, [$item_1->alias, $item_1->id]) : '#' }}">{{ $item_1->name }}</a>
                                 @endforeach
                             </div>
                         </li>
@@ -60,7 +60,7 @@
                         {{-- Khong sub menu --}}
                         <li class="nav-item">
                             {{--<a class="nav-link" href="{{ asset('/static/'. $item_0->alias) }}">{{ $item_0->name }}</a>--}}
-                            <a class="nav-link" href="{{ $item_0->strAttr != '' ? route($item_0->strAttr) : route('static', $item_0->alias) }}">{{ $item_0->name }}</a>
+                            <a class="nav-link" href="{{ $item_0->route != '' ? route($item_0->route) : route('static', $item_0->alias) }}">{{ $item_0->name }}</a>
                         </li>
                     @endif
                 @endforeach

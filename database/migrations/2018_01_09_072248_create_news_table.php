@@ -25,8 +25,6 @@ class CreateNewsTable extends Migration
             $table->string('image',255)->nullable();
             $table->boolean('highlights')->default('false');
             $table->unsignedInteger('views')->default(0);
-            $table->string('strAttr')->nullable();
-            $table->integer('intAttr')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

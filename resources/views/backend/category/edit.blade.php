@@ -46,10 +46,10 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="example-url-input" class="col-2 col-form-label">Route name</label>
+                    <label for="example-url-input" class="col-2 col-form-label">Route</label>
                     <div class="col-10">
-                        <input class="form-control" type="text" value="{!! old('strAttr',$category->strAttr) !!}"
-                               id="example-url-input" name="strAttr">
+                        <input class="form-control" type="text" value="{!! old('route',$category->route) !!}"
+                               id="example-url-input" name="route">
                     </div>
                 </div>
                 <div class="form-group row">

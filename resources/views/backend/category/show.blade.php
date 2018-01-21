@@ -30,6 +30,11 @@
                         </div>
                     </div>
                     <div class="row">
+                        <label for="route" class="col-2">Route</label>
+                        <div class="col-10">{{ $category->route }}
+                        </div>
+                    </div>
+                    <div class="row">
                         <label for="keywords" class="col-2">Keywords</label>
                         <div class="col-10">{{ $category->keywords }}
                         </div>
