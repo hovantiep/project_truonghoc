@@ -15,8 +15,8 @@ class Category extends Model
         'name', 'alias', 'order', 'parent_id', 'keywords', 'description', 'route'
     ];
 
-    public function news()
+    public function post()
     {
-        return $this->hasMany('truonghoc\News', 'category_id', 'id');
+        return $this->hasMany('truonghoc\Post', 'category_id', 'id');
     }
 }

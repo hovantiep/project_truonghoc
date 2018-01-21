@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use truonghoc\Category;
 use truonghoc\Http\Controllers\Controller;
-use truonghoc\News;
+use truonghoc\Post;
 
 class HomeController extends Controller
 {
@@ -31,10 +31,10 @@ class HomeController extends Controller
 //        Tim ra nhom tin tuc (co route la news)
         $filter = 'news';
         $news = DB::table('categories')
-            ->join('news', 'news.category_id', '=', 'categories.id')
+            ->join('posts', 'posts.category_id', '=', 'categories.id')
             ->where('categories.route', $filter)
             ->orderBy('created_at', 'DES')
-            ->select('news.id', 'news.category_id', 'news.title', 'news.alias as slug', 'news.intro', 'news.image', 'news.created_at',
+            ->select('posts.id', 'posts.category_id', 'posts.title', 'posts.alias as slug', 'posts.intro', 'posts.image', 'posts.created_at',
                 'categories.name', 'categories.alias', 'categories.id as categoryId')
             ->take(5)
             ->get();
@@ -42,9 +42,9 @@ class HomeController extends Controller
 //        Thong bao
         $keyword = 'thong_bao';
         $alerts = DB::table('categories')
-            ->join('news', 'news.category_id', '=', 'categories.id')
+            ->join('posts', 'posts.category_id', '=', 'categories.id')
             ->where('categories.alias', $keyword)
-            ->select('news.id', 'news.category_id', 'news.title', 'news.alias as slug', 'news.intro', 'news.image', 'news.created_at',
+            ->select('posts.id', 'posts.category_id', 'posts.title', 'posts.alias as slug', 'posts.intro', 'posts.image', 'posts.created_at',
                 'categories.name', 'categories.alias', 'categories.id as categoryId')
             ->take(5)
             ->orderBy('created_at', 'DES')
@@ -113,7 +113,7 @@ class HomeController extends Controller
         $parentName = Category::select('alias')->where('id', $parentID)->first()->alias; // tin_tuc
 
 //        Cap nhat luot xem
-        $news = News::find($id);
+        $news = Post::find($id);
         $news->views = $news->views + 1;
         $news->save();
 

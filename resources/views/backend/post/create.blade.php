@@ -6,7 +6,7 @@
             <a href="{{ route('dashboard.index') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ route('news.index') }}">News</a>
+            <a href="{{ route('post.index') }}">Post</a>
         </li>
         <li class="breadcrumb-item active">Create</li>
     </ol>
@@ -16,7 +16,7 @@
             {{--Displaying The Validation Errors--}}
             @include('backend.partials.validate_errors')
             {{--End Displaying The Validation Errors--}}
-            <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="example-text-input" class="col-2 col-form-label">Title</label>
                     <div class="col-10">
@@ -61,7 +61,7 @@
                             <input type="checkbox" class="custom-control-input"
                                    {!! old('highlights') == true ? 'checked' : '' !!} name="highlights">
                             <span class="custom-control-indicator"></span>
-                            <span class="custom-control-description">This is highlights news</span>
+                            <span class="custom-control-description">This is highlights post</span>
                         </label>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                 <button type="submit" id="action" name="action" value="save_and_close" class="btn btn-success offset-2">
                     Save &amp; Close
                 </button>
-                <a href="{{ route('news.index') }}" class="btn btn-danger">Close</a>
+                <a href="{{ route('post.index') }}" class="btn btn-danger">Close</a>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
         </div>

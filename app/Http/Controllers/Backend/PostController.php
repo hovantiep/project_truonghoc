@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use truonghoc\Category;
 use truonghoc\Http\Controllers\Controller;
-use truonghoc\Http\Requests\NewsStoreRequest;
-use truonghoc\Http\Requests\NewsUpdateRequest;
-use truonghoc\News;
+use truonghoc\Http\Requests\PostStoreRequest;
+use truonghoc\Http\Requests\PostUpdateRequest;
+use truonghoc\Post;
 
-class NewsController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +19,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-//        $news = News::with('category')->get();
-//        $category = $news[1]->category->get();
-//        dd($category);
-        $news = News::with('category')->orderByDesc('id')->get();
-        return view('backend.news.index', compact('news'));
+        $posts = Post::with('category')->orderByDesc('id')->get();
+        return view('backend.post.index', compact('posts'));
     }
 
     /**
@@ -35,7 +32,7 @@ class NewsController extends Controller
     {
 //        Chi lay category con (loai tin) lam type cho news
         $types = Category::all();
-        return view('backend.news.create', compact('types'));
+        return view('backend.post.create', compact('types'));
     }
 
     /**
@@ -44,17 +41,17 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(NewsStoreRequest $request)
+    public function store(PostStoreRequest $request)
     {
-        $news = new News();
-        $news->title = $request->input('title');
-        $news->category_id = $request->input('category_id');
-        $news->alias = str_slug($request->input('title'));
-        $news->order = $request->input('order');
-        $news->intro = $request->input('intro');
-        $news->content = $request->input('content');
-        $news->keywords = $request->input('keywords');
-        $news->highlights = ($request->input('highlights') != null) ? 1 : 0;
+        $post = new Post();
+        $post->title = $request->input('title');
+        $post->category_id = $request->input('category_id');
+        $post->alias = str_slug($request->input('title'));
+        $post->order = $request->input('order');
+        $post->intro = $request->input('intro');
+        $post->content = $request->input('content');
+        $post->keywords = $request->input('keywords');
+        $post->highlights = ($request->input('highlights') != null) ? 1 : 0;
 //        Luu file anh
         $image = $request->file('image');
 //        Su dung de luu ten dung cho if sau
@@ -65,18 +62,18 @@ class NewsController extends Controller
             $onlyName = pathinfo($image_name, PATHINFO_FILENAME);
             $extension = pathinfo($image_name, PATHINFO_EXTENSION);
             $image_newName = str_slug($onlyName) . "-" . str_random() . "." . $extension;
-            $news->image = $image_newName;
+            $post->image = $image_newName;
             $imageName = $image_newName;
         };
 //        Lua chon hanh dong khong duoc do xung dot textboxio
-        if ($news->save()) {
+        if ($post->save()) {
 //            Luu duoc moi sao chep hinh anh (su dung ten toan cuc)
-            $image->move('resources/upload/news/', $imageName);
+            $image->move('resources/upload/post/', $imageName);
             session()->put('success', 'Item created successfully.');
         } else {
             session()->put('danger', 'Item save fail.');
         }
-        return redirect()->route('news.index');
+        return redirect()->route('post.index');
     }
 
     /**
@@ -87,8 +84,8 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        $news = News::find($id);
-        return view('backend.news.show', compact('news'));
+        $post = Post::find($id);
+        return view('backend.post.show', compact('post'));
     }
 
     /**
@@ -99,9 +96,9 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        $news = News::find($id);
+        $post = Post::find($id);
         $types = Category::all();
-        return view('backend.news.edit', compact('news'), compact('types'));
+        return view('backend.post.edit', compact('post'), compact('types'));
     }
 
     /**
@@ -111,17 +108,17 @@ class NewsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(NewsUpdateRequest $request, $id)
+    public function update(PostUpdateRequest $request, $id)
     {
-        $news = News::find($id);
-        $news->title = $request->input('title');
-        $news->category_id = $request->input('category_id');
-        $news->alias = str_slug($request->input('title'));
-        $news->order = $request->input('order');
-        $news->intro = $request->input('intro');
-        $news->content = $request->input('content');
-        $news->keywords = $request->input('keywords');
-        $news->highlights = ($request->input('highlights') != null) ? 1 : 0;
+        $post = Post::find($id);
+        $post->title = $request->input('title');
+        $post->category_id = $request->input('category_id');
+        $post->alias = str_slug($request->input('title'));
+        $post->order = $request->input('order');
+        $post->intro = $request->input('intro');
+        $post->content = $request->input('content');
+        $post->keywords = $request->input('keywords');
+        $post->highlights = ($request->input('highlights') != null) ? 1 : 0;
 //        Thay doi hinh (su dung bien toan cuc cho if sau)
         $imageName = '';
         if (!empty($request->file('image'))) {
@@ -132,23 +129,23 @@ class NewsController extends Controller
             $extension = pathinfo($image_name, PATHINFO_EXTENSION);
             $image_newName = str_slug($onlyName) . "-" . str_random() . "." . $extension;
 //        Xoa file cu
-            $delImg = 'resources/upload/news/' . $news->image;
+            $delImg = 'resources/upload/post/' . $post->image;
             if (\File::exists($delImg)) {
                 \File::delete($delImg);
             } else {
                 session()->put('warning', 'File not exists.');
             }
 //        Luu file moi
-            $news->image = $image_newName;
-            $image->move('resources/upload/news/', $image_newName);
+            $post->image = $image_newName;
+            $image->move('resources/upload/post/', $image_newName);
         }
 //        Lua chon hanh dong khong duoc do xung dot textboxio
-        if ($news->save()) {
+        if ($post->save()) {
             session()->put('success', 'Item update successfully.');
         } else {
             session()->put('success', 'Item update fail.');
         }
-        return redirect()->route('news.index');
+        return redirect()->route('post.index');
     }
 
     /**
@@ -159,11 +156,11 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        $news = News::find($id);
-        if ($news->delete()) {
+        $post = Post::find($id);
+        if ($post->delete()) {
             session()->put('success', 'Delete item successfully.');
             //            Xoa hinh
-            $delImg = 'resources/upload/news/' . $news->image;
+            $delImg = 'resources/upload/post/' . $post->image;
             if (\File::exists($delImg)) {
                 \File::delete($delImg);
             } else {
@@ -172,6 +169,6 @@ class NewsController extends Controller
         } else {
             session()->put('error', 'Delete item failed.');
         }
-        return redirect()->route('news.index');
+        return redirect()->route('post.index');
     }
 }

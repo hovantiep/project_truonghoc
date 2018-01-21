@@ -62,7 +62,7 @@
                                 <a href="{{ route('news.detail',[$article->alias,$article->slug, $article->id]) }}">
                                     {{-- Hinh 180x150 --}}
                                     <img class="d-flex mr-3 pt-25 img-responsive img-180x150"
-                                         src="{{ asset('resources/upload/news/'.$article->image) }}"
+                                         src="{{ asset('resources/upload/post/'.$article->image) }}"
                                          alt="Generic placeholder image">
                                 </a>
                                 <div class="media-body text-justify">

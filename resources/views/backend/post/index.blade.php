@@ -6,7 +6,7 @@
             <a href="{{ route('dashboard.index') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ route('news.index') }}">News</a>
+            <a href="{{ route('post.index') }}">Post</a>
         </li>
         <li class="breadcrumb-item active">Index</li>
     </ol>
@@ -18,7 +18,7 @@
         <div class="card-body">
             <div class="row mb-2">
                 <div class="col-md-1 offset-md-10 col-sm-12">
-                    <a href="{{ route('news.create') }}" class="btn btn-success">Create</a>
+                    <a href="{{ route('post.create') }}" class="btn btn-success">Create</a>
                 </div>
             </div>
             <div class="table-responsive" id="dataTables-example">
@@ -44,22 +44,22 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                    @foreach($news as $key => $article)
+                    @foreach($posts as $key => $post)
                         <tr>
                             <td class="text-center">{{ ++$key }}</td>
-                            <td>{{ $article->title }}</td>
-                            <td>{{ $article->category->name }}</td>
-                            <td class="text-center">{{ $article->order }}</td>
-                            <td class="text-center">{{ $article->intro }}</td>
+                            <td>{{ $post->title }}</td>
+                            <td>{{ $post->category->name }}</td>
+                            <td class="text-center">{{ $post->order }}</td>
+                            <td class="text-center">{{ $post->intro }}</td>
                             <td class="text-center">
-                                <a href="{{ route('news.show',$article->id) }}"
+                                <a href="{{ route('post.show',$post->id) }}"
                                    class="btn btn-sm btn-info"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                <a href="{{ route('news.edit',$article->id) }}"
+                                <a href="{{ route('post.edit',$post->id) }}"
                                    class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o"
                                                                      aria-hidden="true"></i>
                                 </a>
                                 <div class="btn btn-sm p-0 m-0">
-                                    <form action="{{ route('news.destroy',$article->id) }}" method="POST">
+                                    <form action="{{ route('post.destroy',$post->id) }}" method="POST">
                                         <button style="width: 30px;height: 29px;" type="submit" name="action"
                                                 value="delete"
                                                 class="btn btn-sm btn-danger"
