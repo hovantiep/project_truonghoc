@@ -28,30 +28,35 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        Tim ra nhom tin tuc (co route la news)
-        $filter = 'news';
-        $news = DB::table('categories')
+//        Tat ca post
+        $posts = DB::table('categories')
             ->join('posts', 'posts.category_id', '=', 'categories.id')
-            ->where('categories.route', $filter)
-            ->orderBy('created_at', 'DES')
-            ->select('posts.id', 'posts.category_id', 'posts.title', 'posts.alias as slug', 'posts.intro', 'posts.image', 'posts.created_at',
-                'categories.name', 'categories.alias', 'categories.id as categoryId')
-            ->take(5)
+            ->select('posts.id', 'posts.category_id', 'posts.user_id', 'posts.title', 'posts.alias as postAlias', 'posts.intro', 'posts.order', 'posts.intro',
+                'posts.content', 'posts.keywords', 'posts.image', 'posts.highlights', 'posts.views', 'posts.created_at',
+                'categories.id as categoryId', 'categories.name', 'categories.alias as categoryAlias', 'categories.order as categoryOrder',
+                'categories.parent_id', 'categories.keywords as categoryKeywords', 'categories.description', 'categories.route')
             ->get();
+
+//        Tim ra nhom tin tuc (co route la news) nhung khong phai la noi bat
+        $type = 'news';
+        $news = $posts->where('route', $type)->where('highlights', 0)->sortByDesc('created_at')->take(5)->all();
 
 //        Thong bao
         $keyword = 'thong_bao';
-        $alerts = DB::table('categories')
-            ->join('posts', 'posts.category_id', '=', 'categories.id')
-            ->where('categories.alias', $keyword)
-            ->select('posts.id', 'posts.category_id', 'posts.title', 'posts.alias as slug', 'posts.intro', 'posts.image', 'posts.created_at',
-                'categories.name', 'categories.alias', 'categories.id as categoryId')
-            ->take(5)
-            ->orderBy('created_at', 'DES')
-            ->get();
+        $alerts = $posts->where('categoryAlias', $keyword)->sortByDesc('created_at')->take(5)->all();
+
+//        Van ban moi
+        $category = [64, 65, 66]; // id co ten la van ban... nhin trong csdl :)
+        $documents = $posts->whereIn('categoryId', $category)->sortByDesc('created_at')->take(5)->all();
+
+//        Xem nhieu [tin]
+        $views = $posts->where('route', $type)->sortByDesc('views')->take(5)->all();
+
+//        Noi bat [tin]
+        $highlights = $posts->where('route', $type)->where('highlights', 1)->sortByDesc('created_at')->take(6)->all();
+
         return view('frontend.index',
-            compact('news'),
-            compact('alerts')
+            compact(['news', 'alerts', 'documents', 'views', 'highlights'])
         );
     }
 

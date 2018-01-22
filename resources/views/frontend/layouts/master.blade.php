@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Modern Business - Start Bootstrap Template</title>
+    <meta name="description"
+          content="@yield('description')">
+    <meta name="author" content="Hồ Văn Tiếp - GV tin học">
+    <title>Trường Tiểu học Thủy Đông A</title>
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('public/frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -60,7 +61,8 @@
                         {{-- Khong sub menu --}}
                         <li class="nav-item">
                             {{--<a class="nav-link" href="{{ asset('/static/'. $item_0->alias) }}">{{ $item_0->name }}</a>--}}
-                            <a class="nav-link" href="{{ $item_0->route != '' ? route($item_0->route) : route('static', $item_0->alias) }}">{{ $item_0->name }}</a>
+                            <a class="nav-link"
+                               href="{{ $item_0->route != '' ? route($item_0->route) : route('static', $item_0->alias) }}">{{ $item_0->name }}</a>
                         </li>
                     @endif
                 @endforeach
@@ -77,7 +79,26 @@
     <!-- </div> -->
 </nav>
 
-@yield('content')
+<div class="container">
+    @yield('top-content')
+</div>
+<!-- Page Content -->
+<div class="container">
+    <hr>
+    <div class="row">
+        <!-- LEFT Content -->
+        <div class="col-sm-8">
+            @yield('left-content')
+        </div>
+        <!-- LEFT Content -->
+        <div class="col-sm-4">
+            @yield('right-content')
+        </div>
+    </div>
+</div>
+<!-- /.container main -->
+
+@yield('bottom-content')
 
 <!-- Footer -->
 <button onclick="javascript:void(0);" id="toTop" title="Go to top"><i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -86,14 +107,14 @@
     <div class="container text-center text-light small">
         <p>
             <i class="fa fa-map-marker" aria-hidden="true"></i>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam eos enim voluptatum.</p>
+            Trường TH Thủy Đông A - QL 62, xã Thủy Đông, huyện Thạnh Hóa, tỉnh Long An</p>
         <p>
             <i class="fa fa-phone" aria-hidden="true"></i>
-            024 .6287.2079 - 024.2241.0795</p>
+            0272.6287.2079</p>
         <p>
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
-            c1dllequydon-ntl@hanoiedu.vn.</p>
-        <p class="m-0 text-center text-info">Copyright &copy; Edit by herotiep 2017</p>
+            ththuydonga@gmail.com</p>
+        <p class="m-0 text-center text-info">Copyright &copy; - Edit by herotiep 2018</p>
 
     </div>
     <!-- /.container -->
