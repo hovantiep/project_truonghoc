@@ -3,6 +3,7 @@
 namespace truonghoc\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use truonghoc\Category;
 use truonghoc\Http\Controllers\Controller;
@@ -46,6 +47,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->input('title');
         $post->category_id = $request->input('category_id');
+        $post->user_id = Auth::id();
         $post->alias = str_slug($request->input('title'));
         $post->order = $request->input('order');
         $post->intro = $request->input('intro');
