@@ -77,14 +77,14 @@
         @foreach($highlights as $highlight)
             <div class="col-sm-4 portfolio-item">
                 <div class="card h-100">
-                    <a href="#">
+                    <a href="{{ route('news.detail',[$highlight->categoryAlias,$highlight->postAlias, $highlight->id]) }}">
                         {{-- 700 x 400 --}}
                         <img class="card-img-top img-700x400"
                              src="{{ asset('resources/upload/post/'.$highlight->image) }}" alt="image">
                     </a>
                     <div class="card-body">
                         <h4 class="card-title">
-                            <a href="#">{{ $highlight->title }}</a>
+                            <a href="{{ route('news.detail',[$highlight->categoryAlias,$highlight->postAlias, $highlight->id]) }}">{{ $highlight->title }}</a>
                         </h4>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
                             numquam

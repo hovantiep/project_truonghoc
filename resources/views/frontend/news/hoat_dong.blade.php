@@ -1,381 +1,195 @@
 @extends('frontend.layouts.master')
-@section('content')
-    <!-- Page Content -->
-    <div class="container">
-        <h1 class="mt-4 mb-3">Hoạt động
-            <small>Subheading</small>
-        </h1>
-        <!-- Page Heading/Breadcrumbs -->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="index.html">Home</a>
-            </li>
-            <li class="breadcrumb-item active">Blog Home 2</li>
-        </ol>
-        <div class="row">
-            <div class="col-sm-8">
-                <!-- Blog Post -->
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="#">
-                                    <img class="img-fluid rounded pt-37" src="http://placehold.it/750x300" alt="">
-                                </a>
-                            </div>
-                            <div class="col-lg-6">
-                                <h2 class="card-title">Post Title</h2>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla?
-                                    Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-                                    possimus, veniam magni quis!</p>
-                                <a href="#" class="btn btn-danger btn-sm">Read More &rarr;</a>
-                            </div>
-                        </div>
+
+@section('top-content')
+    <h1 class="mt-4 mb-3">{{ $parent->name }} </h1>
+    <!-- Page Heading/Breadcrumbs -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ route('home') }}">Home</a>
+        </li>
+        <li class="breadcrumb-item active">{{ $category->name }}</li>
+    </ol>
+@stop
+@section('left-content')
+    <!-- Blog Post -->
+    @foreach($news as $article)
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <a href="{{ route('news.detail',[$article->categoryAlias,$article->postAlias, $article->id]) }}">
+                            {{-- Hinh 700x400 --}}
+                            <img class="img-fluid rounded pt-37"
+                                 src="{{ asset('resources/upload/post/'.$article->image) }}" alt="">
+                        </a>
                     </div>
-                    <div class="card-footer text-muted small">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i> January 1, 2017 by
-                        <a href="#">Start Bootstrap</a>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="#">
-                                    <img class="img-fluid rounded pt-37" src="http://placehold.it/750x300" alt="">
-                                </a>
-                            </div>
-                            <div class="col-lg-6">
-                                <h2 class="card-title">Post Title</h2>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla?
-                                    Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-                                    possimus, veniam magni quis!</p>
-                                <a href="#" class="btn btn-danger btn-sm">Read More &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-muted small">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i> January 1, 2017 by
-                        <a href="#">Start Bootstrap</a>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="#">
-                                    <img class="img-fluid rounded pt-37" src="http://placehold.it/750x300" alt="">
-                                </a>
-                            </div>
-                            <div class="col-lg-6">
-                                <h2 class="card-title">Post Title</h2>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla?
-                                    Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-                                    possimus, veniam magni quis!</p>
-                                <a href="#" class="btn btn-danger btn-sm">Read More &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-muted small">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i> January 1, 2017 by
-                        <a href="#">Start Bootstrap</a>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="#">
-                                    <img class="img-fluid rounded pt-37" src="http://placehold.it/750x300" alt="">
-                                </a>
-                            </div>
-                            <div class="col-lg-6">
-                                <h2 class="card-title">Post Title</h2>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla?
-                                    Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-                                    possimus, veniam magni quis!</p>
-                                <a href="#" class="btn btn-danger btn-sm">Read More &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-muted small">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i> January 1, 2017 by
-                        <a href="#">Start Bootstrap</a>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="#">
-                                    <img class="img-fluid rounded pt-37" src="http://placehold.it/750x300" alt="">
-                                </a>
-                            </div>
-                            <div class="col-lg-6">
-                                <h2 class="card-title">Post Title</h2>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla?
-                                    Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-                                    possimus, veniam magni quis!</p>
-                                <a href="#" class="btn btn-danger btn-sm">Read More &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-muted small">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i> January 1, 2017 by
-                        <a href="#">Start Bootstrap</a>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="#">
-                                    <img class="img-fluid rounded pt-37" src="http://placehold.it/750x300" alt="">
-                                </a>
-                            </div>
-                            <div class="col-lg-6">
-                                <h2 class="card-title">Post Title</h2>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla?
-                                    Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-                                    possimus, veniam magni quis!</p>
-                                <a href="#" class="btn btn-danger btn-sm">Read More &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-muted small">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i> January 1, 2017 by
-                        <a href="#">Start Bootstrap</a>
-                    </div>
-                </div>
-                <!-- Pagination -->
-                <ul class="pagination justify-content-center mb-4">
-                    <li class="page-item">
-                        <a class="page-link" href="#">&larr; Older</a>
-                    </li>
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#">Newer &rarr;</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.col-sm-8 -->
-            <div class="col-sm-4">
-                <!-- Message Widget -->
-                <div class="card my-4 mt-0">
-                    <a href="#" class="none-decor ribbon">
-                        <h5 class="card-header">
-                            <i class="fa fa-bell-o" aria-hidden="true"></i>
-                            Thông báo</h5>
-                    </a>
-                    <!-- thong bao trong thang -->
-                    <div class="card-body overflow">
-                        <p>
-                            <a href="#">1. Lịch nghỉ tết
-                                <span class="badge badge-danger">New</span>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="#">2. Lịch trực đêm
-                                <span class="badge badge-danger">New</span>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="#">3. Ngày nghỉ trong tuần
-                                <span class="badge badge-danger">New</span>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="#">4. Triệu tập</a>
-                        </p>
-                        <p>
-                            <a href="#">5. Triệu tập</a>
-                        </p>
-                        <p>
-                            <a href="#">6. Triệu tập</a>
-                        </p>
-                        <p>
-                            <a href="#">7. Triệu tập</a>
-                        </p>
-                        <p>
-                            <a href="#">8. Triệu tập</a>
-                        </p>
-                    </div>
-                </div>
-                <!-- News docunents Widget -->
-                <div class="card mb-4">
-                    <a href="#" class="none-decor ribbon">
-                        <h5 class="card-header">
-                            <i class="fa fa-file-text" aria-hidden="true"></i>
-                            Văn bản mới</h5>
-                    </a>
-                    <!-- van ban quan trong -->
-                    <div class="card-body overflow">
-                        <p>
-                            <a href="#">1. TT-404/2008 Cách ghi điểm
-                                <span class="badge badge-primary">New</span>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="#">2. TT-404/2008 Cách ghi điểm
-                                <span class="badge badge-primary">New</span>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="#">3. TT-404/2008 Cách ghi điểm
-                                <span class="badge badge-primary">New</span>
-                            </a>
-                        </p>
-                        <p>
-                            <a href="#">4. TT-404/2008 Cách ghi điểm</a>
-                        </p>
-                        <p>
-                            <a href="#">5. TT-404/2008 Cách ghi điểm</a>
-                        </p>
-                        <p>
-                            <a href="#">6. TT-404/2008 Cách ghi điểm</a>
-                        </p>
-                        <p>
-                            <a href="#">7. TT-404/2008 Cách ghi điểm</a>
-                        </p>
-                        <p>
-                            <a href="#">8. TT-404/2008 Cách ghi điểm</a>
-                        </p>
-                        <p>
-                            <a href="#">9. TT-404/2008 Cách ghi điểm</a>
-                        </p>
-                        <p>
-                            <a href="#">10. TT-404/2008 Cách ghi điểm</a>
-                        </p>
-                    </div>
-                </div>
-                <!-- Most View Widget -->
-                <div class="card my-4">
-                    <a href="" class="none-decor ribbon">
-                        <h5 class="card-header">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
-                            Tin đọc nhiều</h5>
-                    </a>
-                    <!-- top 10 -->
-                    <div class="card-body">
-                        <p>
-                            <a href="#">1. Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                            <span class="badge badge-danger">10</span>
-                        </p>
-                        <p>
-                            <a href="#">2. Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                            <span class="badge badge-danger">10</span>
-                        </p>
-                        <p>
-                            <a href="#">3. Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                            <span class="badge badge-danger">10</span>
-                        </p>
-                        <p>
-                            <a href="#">4. Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                            <span class="badge badge-warning">4</span>
-                        </p>
-                        <p>
-                            <a href="#">5. Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                            <span class="badge badge-warning">4</span>
-                        </p>
-                        <p>
-                            <a href="#">6. Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                            <span class="badge badge-warning">4</span>
-                        </p>
-                        <p>
-                            <a href="#">7. Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                            <span class="badge badge-light">3</span>
-                        </p>
-                        <p>
-                            <a href="#">8. Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                            <span class="badge badge-light">3</span>
-                        </p>
-                        <p>
-                            <a href="#">9. Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                            <span class="badge badge-light">3</span>
-                        </p>
-                        <p>
-                            <a href="#">10. Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                            <span class="badge badge-light">3</span>
-                        </p>
-                    </div>
-                </div>
-                <!-- Image Widget -->
-                <div class="card my-4">
-                    <a href="#" class="none-decor ribbon">
-                        <h5 class="card-header">
-                            <i class="fa fa-camera" aria-hidden="true"></i>
-                            Hình ảnh hoạt động</h5>
-                    </a>
-                    <div class="card-body text-center">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6">
-                                <a href="#">
-                                    <img class="img-fluid" src="img/128x128.svg" alt="">
-                                    <p>Sinh hoat he...</p>
-                                </a>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <a href="#">
-                                    <img class="img-fluid" src="img/128x128.svg" alt="">
-                                    <p>Sinh hoat he...</p>
-                                </a>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <a href="#">
-                                    <img class="img-fluid" src="img/128x128.svg" alt="">
-                                    <p>Sinh hoat he...</p>
-                                </a>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <a href="#">
-                                    <img class="img-fluid" src="img/128x128.svg" alt="">
-                                    <p>Sinh hoat he...</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Categories Widget -->
-                <div class="card my-4">
-                    <a href="" class="none-decor ribbon">
-                        <h5 class="card-header">
-                            <i class="fa fa-list-alt" aria-hidden="true"></i>
-                            Danh mục</h5>
-                    </a>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li>
-                                        <a href="#">Web Design</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">HTML</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Freebies</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li>
-                                        <a href="#">JavaScript</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">CSS</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Tutorials</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="col-lg-8">
+                        <h2 class="card-title">{{ $article->title }}</h2>
+                        <p class="card-text">{{ $article->intro }}</p>
+                        <a href="{{ route('news.detail',[$article->categoryAlias,$article->postAlias, $article->id]) }}"
+                           class="btn btn-danger btn-sm">Chi tiết &rarr;</a>
                     </div>
                 </div>
             </div>
-            <!-- /.col-sm-4 -->
+            <div class="card-footer text-muted small">
+                <i class="fa fa-clock-o" aria-hidden="true"></i> January 1, 2017 by {{ $article->user_id }}
+            </div>
         </div>
-        <!-- /.row -->
+    @endforeach
+
+    <!-- Pagination -->
+    @if($news->lastPage() != 1)
+        <ul class="pagination justify-content-center mb-4">
+            @if($news->currentPage() != 1)
+                <li class="page-item">
+                    <a class="page-link " href="{!! $news->url($news->currentPage() - 1) !!}">&larr;</a>
+                </li>
+            @endif
+            @for($i = 1; $i <= $news->lastPage(); $i++)
+                <li class="page-item {!! ($news->currentPage() == $i) ? 'active' : null !!}">
+                    <a class="page-link" href="{{ $news->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+            @if($news->currentPage() != $news->lastPage())
+                <li class="page-item">
+                    <a class="page-link" href="{!! $news->url($news->currentPage() + 1) !!}">&rarr;</a>
+                </li>
+            @endif
+        </ul>
+    @endif
+@stop
+
+@section('right-content')
+    <!-- Message Widget -->
+    <div class="card my-4 mt-0">
+        <div class="none-decor ribbon">
+            <h5 class="card-header">
+                <i class="fa fa-bell-o" aria-hidden="true"></i>
+                Thông báo</h5>
+        </div>
+        <!-- thong bao trong thang -->
+        <div class="card-body overflow">
+            @foreach( $alerts as $alert)
+                <p>
+                    <a href="#">{{ $alert->title }}
+                        {{-- Neu trong ngay thi hien thi nut new canh bao --}}
+                        @if(time() - strtotime($alert->created_at) <= 86400)
+                            <span class="badge badge-danger">New</span>@endif
+                    </a>
+                </p>
+            @endforeach
+        </div>
     </div>
-    <!-- /.container -->
+    <!-- News docunents Widget -->
+    <div class="card mb-4">
+        <div href="#" class="none-decor ribbon">
+            <h5 class="card-header">
+                <i class="fa fa-file-text" aria-hidden="true"></i>
+                Văn bản mới</h5>
+        </div>
+        <!-- van ban quan trong -->
+        <div class="card-body overflow">
+            @foreach( $documents as $document)
+                <p>
+                    <a href="#">{{ $document->title }}
+                        {{-- Neu trong tuan thi hien thi nut new canh bao --}}
+                        @if(time() - strtotime($document->created_at) <= 604800)
+                            <span class="badge badge-info">New</span>@endif
+                    </a>
+                </p>
+            @endforeach
+        </div>
+    </div>
+    <!-- Most View Widget -->
+    <div class="card my-4">
+        <div href="" class="none-decor ribbon">
+            <h5 class="card-header">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+                Tin đọc nhiều</h5>
+        </div>
+        <!-- top 10 -->
+        <div class="card-body">
+            @foreach( $views as $view)
+                <p>
+                    <a href="#">{{ $view->title }}
+                        <span class="badge badge-warning">{{ $view->views }}</span>
+                    </a>
+                </p>
+            @endforeach
+        </div>
+    </div>
+    <!-- Image Widget -->
+    <div class="card my-4">
+        <div href="#" class="none-decor ribbon">
+            <h5 class="card-header">
+                <i class="fa fa-camera" aria-hidden="true"></i>
+                Hình ảnh hoạt động</h5>
+        </div>
+        <div class="card-body text-center">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <a href="#">
+                        <img class="img-fluid" src="{{ asset('public/frontend/img/128x128.svg') }}" alt="">
+                        <p>Sinh hoat he...</p>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <a href="#">
+                        <img class="img-fluid" src="{{ asset('public/frontend/img/128x128.svg') }}" alt="">
+                        <p>Sinh hoat he...</p>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <a href="#">
+                        <img class="img-fluid" src="{{ asset('public/frontend/img/128x128.svg') }}" alt="">
+                        <p>Sinh hoat he...</p>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <a href="#">
+                        <img class="img-fluid" src="{{ asset('public/frontend/img/128x128.svg') }}" alt="">
+                        <p>Sinh hoat he...</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Categories Widget -->
+    <div class="card my-4">
+        <div href="" class="none-decor ribbon">
+            <h5 class="card-header">
+                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                Danh mục</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="#">Web Design</a>
+                        </li>
+                        <li>
+                            <a href="#">HTML</a>
+                        </li>
+                        <li>
+                            <a href="#">Freebies</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="#">JavaScript</a>
+                        </li>
+                        <li>
+                            <a href="#">CSS</a>
+                        </li>
+                        <li>
+                            <a href="#">Tutorials</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -38,23 +38,25 @@
     @endforeach
 
     <!-- Pagination -->
-    <ul class="pagination justify-content-center mb-4">
-        @if($news->currentPage() != 1)
-            <li class="page-item">
-                <a class="page-link " href="{!! $news->url($news->currentPage()-1) !!}">&larr;</a>
-            </li>
-        @endif
-        @for($i = 1; $i <= $news->lastPage(); $i++)
-            <li class="page-item {!! ($news->currentPage() == $i) ? 'active' : null !!}">
-                <a class="page-link" href="{{ $news->url($i) }}">{{ $i }}</a>
-            </li>
-        @endfor
-        @if($news->currentPage()!=$news->lastPage())
-            <li class="page-item">
-                <a class="page-link" href="{!! $news->url($news->currentPage()+1) !!}">&rarr;</a>
-            </li>
-        @endif
-    </ul>
+    @if($news->lastPage() != 1)
+        <ul class="pagination justify-content-center mb-4">
+            @if($news->currentPage() != 1)
+                <li class="page-item">
+                    <a class="page-link " href="{!! $news->url($news->currentPage() - 1) !!}">&larr;</a>
+                </li>
+            @endif
+            @for($i = 1; $i <= $news->lastPage(); $i++)
+                <li class="page-item {!! ($news->currentPage() == $i) ? 'active' : null !!}">
+                    <a class="page-link" href="{{ $news->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+            @if($news->currentPage() != $news->lastPage())
+                <li class="page-item">
+                    <a class="page-link" href="{!! $news->url($news->currentPage() + 1) !!}">&rarr;</a>
+                </li>
+            @endif
+        </ul>
+    @endif
 @stop
 
 @section('right-content')
