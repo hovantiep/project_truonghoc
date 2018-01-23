@@ -51,7 +51,7 @@
             <div class="col-sm-12 portfolio-item">
                 <div class="media">
                     <a href="{{ route('news.detail',[$article->categoryAlias,$article->postAlias, $article->id]) }}">
-                        {{-- Hinh 140x80 --}}
+                        {{-- Hinh 200x140 --}}
                         <img class="d-flex mr-3 pt-25 img-responsive img-200x140"
                              src="{{ asset('resources/upload/post/'.$article->image) }}"
                              alt="image">

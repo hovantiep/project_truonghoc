@@ -95,13 +95,50 @@ class HomeController extends Controller
      */
     public function news($type, $id) //tin_giao_duc // id cua category
     {
+//        Tim ten cua type tin // Tin giáo dục
+
 //        Tim parentName khi biet $id cua category
-        $parentID = DB::table('categories')->where('id', $id)->first()->parent_id; //47
-        $parentName = Category::select('alias')->where('id', $parentID)->first()->alias; // tin_tuc
+        $category = DB::table('categories')->where('id', $id)->first(); //47
+        $parent = Category::select('name', 'alias')->where('id', $category->parent_id)->first(); // tin_tuc
 //        $route = Route::currentRouteName();
 //        Hien thi view dang hoat_dong, tin_tuc
-        $view = 'frontend.news.' . $parentName;
-        return view($view);
+
+//        Tat ca post
+        $posts = DB::table('categories')
+            ->join('posts', 'posts.category_id', '=', 'categories.id')
+            ->select('posts.id', 'posts.category_id', 'posts.user_id', 'posts.title', 'posts.alias as postAlias', 'posts.intro', 'posts.order', 'posts.intro',
+                'posts.content', 'posts.keywords', 'posts.image', 'posts.highlights', 'posts.views', 'posts.created_at',
+                'categories.id as categoryId', 'categories.name', 'categories.alias as categoryAlias', 'categories.order as categoryOrder',
+                'categories.parent_id', 'categories.keywords as categoryKeywords', 'categories.description', 'categories.route')
+            ->get();
+
+//        Tim ra nhom tin tuc (co route la news)
+        $type = 'news';
+        $news = $posts->where('route', $type)->sortByDesc('created_at')->all();
+//        Ham phan trang trong function rieng tu tao
+        $news = paginater($news, 5);
+//        Cai dat duong dan moi dung duoc: do paginate tu viet
+        $news->setPath($id);
+
+//        Thong bao
+        $keyword = 'thong_bao';
+        $alerts = $posts->where('categoryAlias', $keyword)->sortByDesc('created_at')->take(5)->all();
+
+//        Van ban moi
+        $cate = [64, 65, 66]; // id co ten la van ban... nhin trong csdl :)
+        $documents = $posts->whereIn('categoryId', $cate)->sortByDesc('created_at')->take(5)->all();
+
+//        Xem nhieu [tin]
+        $views = $posts->where('route', $type)->sortByDesc('views')->take(5)->all();
+
+//        Noi bat [tin]
+        $highlights = $posts->where('route', $type)->where('highlights', 1)->sortByDesc('created_at')->take(6)->all();
+
+
+        $view = 'frontend.news.' . $parent->alias;
+        return view($view,
+            compact(['category', 'parent', 'news', 'alerts', 'documents', 'views', 'highlights'])
+        );
     }
 
     /**

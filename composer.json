@@ -29,7 +29,8 @@
       "truonghoc\\": "app/"
     },
     "files": [
-      "app/Functions/My.php"
+      "app/Functions/My.php",
+      "app/Functions/pagination.php"
     ]
   },
   "autoload-dev": {
