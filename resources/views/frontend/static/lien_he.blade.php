@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('content')
+@section('top-content')
     <!-- Page Content -->
     <div class="container">
         <!-- Page Heading/Breadcrumbs -->

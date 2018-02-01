@@ -80,11 +80,58 @@ class HomeController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function page($type, $id)
+    public function page($type, $id, $postId = null)
     {
+//        Tim parentName khi biet $id cua category
+        $category = DB::table('categories')->where('id', $id)->first(); //47
+        $parent = Category::select('name', 'alias')->where('id', $category->parent_id)->first(); // truong_hoc
+//        $route = Route::currentRouteName();
+//        Hien thi view dang hoat_dong, tin_tuc
+
+//        Tat ca post
+        $posts = DB::table('categories')
+            ->join('posts', 'posts.category_id', '=', 'categories.id')
+            ->select('posts.id', 'posts.category_id', 'posts.user_id', 'posts.title', 'posts.alias as postAlias', 'posts.intro', 'posts.order', 'posts.intro',
+                'posts.content', 'posts.keywords', 'posts.image', 'posts.highlights', 'posts.views', 'posts.created_at',
+                'categories.id as categoryId', 'categories.name', 'categories.alias as categoryAlias', 'categories.order as categoryOrder',
+                'categories.parent_id', 'categories.keywords as categoryKeywords', 'categories.description', 'categories.route')
+            ->get();
+
+//        Tim ra nhom tin tuc (co route la news)
+        $cate = 'news';
+        $news = $posts->where('route', $cate)->where('categoryAlias', $type)->sortByDesc('created_at')->all();
+//        Ham phan trang trong function rieng tu tao
+        $news = paginater($news, 5);
+//        Cai dat duong dan moi dung duoc: do paginate tu viet
+        $news->setPath($id);
+
+//        Thong bao
+        $keyword = 'thong_bao';
+        $alerts = $posts->where('categoryAlias', $keyword)->sortByDesc('created_at')->take(5)->all();
+        $alertsPaginate = $posts->where('categoryAlias', $keyword)->sortByDesc('created_at')->all();
+//        Ham phan trang trong function rieng tu tao
+        $alertsPaginate = paginater($alertsPaginate, 10);
+        //        Cai dat duong dan moi dung duoc: do paginate tu viet
+        $alertsPaginate->setPath($id);
+//        Van ban moi
+        $arrCate = [64, 65, 66]; // id co ten la van ban... nhin trong csdl :)
+        $documents = $posts->whereIn('categoryId', $arrCate)->sortByDesc('created_at')->take(5)->all();
+
+//        Xem nhieu [tin]
+        $views = $posts->where('route', $cate)->sortByDesc('views')->take(5)->all();
+
+//        Noi bat [tin]
+        $highlights = $posts->where('route', $cate)->where('highlights', 1)->sortByDesc('created_at')->take(6)->all();
+
+//      Hien thi thong bao
         $route = Route::currentRouteName();
         $view = 'frontend.pages.' . $type;
-        return view($view);
+        if (view()->exists($view)) {
+            return view($view,
+                compact(['category', 'parent', 'news', 'alerts','alertsPaginate', 'documents', 'views', 'highlights', 'postId'])
+            );
+        }
+        return view('frontend.static.404');
     }
 
     /**
@@ -134,9 +181,12 @@ class HomeController extends Controller
 
 
         $view = 'frontend.news.' . $parent->alias;
-        return view($view,
-            compact(['category', 'parent', 'news', 'alerts', 'documents', 'views', 'highlights'])
-        );
+        if (view()->exists($view)) {
+            return view($view,
+                compact(['category', 'parent', 'news', 'alerts', 'documents', 'views', 'highlights'])
+            );
+        }
+        return view('frontend.static.404');
     }
 
     /**
@@ -198,7 +248,7 @@ class HomeController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function common($type, $id) //van ban,... // id cua category
+    public function common($type, $id) //thong bao,... // id cua category
     {
 //        Tim parentName khi biet $id cua category
         $parentID = DB::table('categories')->where('id', $id)->first()->parent_id; //47
@@ -206,7 +256,24 @@ class HomeController extends Controller
 
 //        Hien thi view dang van ban, ...
         $view = 'frontend.common.' . $parentName . '_' . $type;
-        return view($view);
+        if (view()->exists($view)) {
+            return view($view);
+        }
+        return view('frontend.static.404');
+    }
+
+    public function common_detail($type, $id) //van ban,... // id cua category
+    {
+//        Tim parentName khi biet $id cua category
+        $parentID = DB::table('categories')->where('id', $id)->first()->parent_id; //47
+        $parentName = Category::select('alias')->where('id', $parentID)->first()->alias; // van_ban
+
+//        Hien thi view dang van ban, ...
+        $view = 'frontend.common.' . $parentName . '_detail';
+        if (view()->exists($view)) {
+            return view($view);
+        }
+        return view('frontend.static.404');
     }
 
     /**
@@ -217,7 +284,10 @@ class HomeController extends Controller
     {
         $route = Route::currentRouteName();
         $view = 'frontend.category.' . $route;
-        return 'thongbao.html';
+        if (view()->exists($view)) {
+            return view($view);
+        }
+        return view('frontend.static.404');
     }
 
 }

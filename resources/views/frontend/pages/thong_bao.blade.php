@@ -1,76 +1,193 @@
 @extends('frontend.layouts.master')
-@section('content')
-    <!-- Page Content -->
-    <div class="container">
-
-        <!-- Page Heading/Breadcrumbs -->
-        <h1 class="mt-4 mb-3">Thong bao
-            <small>Subheading</small>
-        </h1>
-
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="index.html">Home</a>
-            </li>
-            <li class="breadcrumb-item active">Pricing</li>
-        </ol>
-
-        <!-- Content Row -->
-        <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="card h-100">
-                    <h3 class="card-header">Basic</h3>
+@section('top-content')
+    <h1 class="mt-4 mb-3">{{ $parent->name }}
+        <small>{{ $category->name }}</small>
+    </h1>
+    <!-- Page Heading/Breadcrumbs -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ route('home') }}">Home</a>
+        </li>
+        <li class="breadcrumb-item active">{{ $category->name }}</li>
+    </ol>
+@stop
+@section('left-content')
+    <div class="mb-4" id="accordion" role="tablist" aria-multiselectable="true">
+        @foreach($alertsPaginate as $alert)
+            <div class="card">
+                <div class="card-header" role="tab" id="heading{{ $alert->id }}">
+                    <h5 class="mb-0">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapse{{ $alert->id }}"
+                           aria-expanded="false" aria-controls="collapse{{ $alert->id }}">
+                            {{ $alert->title }}
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapse{{ $alert->id }}" class="collapse {{ $postId == $alert->id ?'show':'' }}"
+                     role="tabpanel"
+                     aria-labelledby="heading{{ $alert->id }}">
                     <div class="card-body">
-                        <div class="display-4">$19.99</div>
-                        <div class="font-italic">per month</div>
+                        {!! $alert->content !!}
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
-                        <li class="list-group-item">
-                            <a href="#" class="btn btn-primary">Sign Up!</a>
+                </div>
+            </div>
+        @endforeach
+
+
+    </div>
+    <!-- Pagination -->
+    @if($alertsPaginate->lastPage() != 1)
+        <ul class="pagination justify-content-center mb-4">
+            @if($alertsPaginate->currentPage() != 1)
+                <li class="page-item">
+                    <a class="page-link " href="{!! $alertsPaginate->url($alertsPaginate->currentPage() - 1) !!}">&larr;</a>
+                </li>
+            @endif
+            @for($i = 1; $i <= $alertsPaginate->lastPage(); $i++)
+                <li class="page-item {!! ($alertsPaginate->currentPage() == $i) ? 'active' : null !!}">
+                    <a class="page-link" href="{{ $alertsPaginate->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+            @if($alertsPaginate->currentPage() != $alertsPaginate->lastPage())
+                <li class="page-item">
+                    <a class="page-link" href="{!! $alertsPaginate->url($alertsPaginate->currentPage() + 1) !!}">&rarr;</a>
+                </li>
+            @endif
+        </ul>
+    @endif
+@stop
+@section('right-content')
+    <!-- Message Widget -->
+    <div class="card my-4 mt-0">
+        <div class="none-decor ribbon">
+            <h5 class="card-header">
+                <i class="fa fa-bell-o" aria-hidden="true"></i>
+                Thông báo</h5>
+        </div>
+        <!-- thong bao trong thang -->
+        <div class="card-body overflow">
+            @foreach( $alerts as $alert)
+                <p>
+                    <a href="{{ route('page',[$alert->categoryAlias, $alert->categoryId, $alert->id]) }}">{{ $alert->title }}
+                        {{-- Neu trong ngay thi hien thi nut new canh bao --}}
+                        @if(time() - strtotime($alert->created_at) <= 86400)
+                            <span class="badge badge-danger">New</span>@endif
+                    </a>
+                </p>
+            @endforeach
+        </div>
+    </div>
+    <!-- News docunents Widget -->
+    <div class="card mb-4">
+        <div href="#" class="none-decor ribbon">
+            <h5 class="card-header">
+                <i class="fa fa-file-text" aria-hidden="true"></i>
+                Văn bản mới</h5>
+        </div>
+        <!-- van ban quan trong -->
+        <div class="card-body overflow">
+            @foreach( $documents as $document)
+                <p>
+                    <a href="#">{{ $document->title }}
+                        {{-- Neu trong tuan thi hien thi nut new canh bao --}}
+                        @if(time() - strtotime($document->created_at) <= 604800)
+                            <span class="badge badge-info">New</span>@endif
+                    </a>
+                </p>
+            @endforeach
+        </div>
+    </div>
+    <!-- Most View Widget -->
+    <div class="card my-4">
+        <div href="" class="none-decor ribbon">
+            <h5 class="card-header">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+                Tin đọc nhiều</h5>
+        </div>
+        <!-- top 10 -->
+        <div class="card-body">
+            @foreach( $views as $view)
+                <p>
+                    <a href="#">{{ $view->title }}
+                        <span class="badge badge-warning">{{ $view->views }}</span>
+                    </a>
+                </p>
+            @endforeach
+        </div>
+    </div>
+    <!-- Image Widget -->
+    <div class="card my-4">
+        <div href="#" class="none-decor ribbon">
+            <h5 class="card-header">
+                <i class="fa fa-camera" aria-hidden="true"></i>
+                Hình ảnh hoạt động</h5>
+        </div>
+        <div class="card-body text-center">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <a href="#">
+                        <img class="img-fluid" src="{{ asset('public/frontend/img/128x128.svg') }}" alt="">
+                        <p>Sinh hoat he...</p>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <a href="#">
+                        <img class="img-fluid" src="{{ asset('public/frontend/img/128x128.svg') }}" alt="">
+                        <p>Sinh hoat he...</p>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <a href="#">
+                        <img class="img-fluid" src="{{ asset('public/frontend/img/128x128.svg') }}" alt="">
+                        <p>Sinh hoat he...</p>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <a href="#">
+                        <img class="img-fluid" src="{{ asset('public/frontend/img/128x128.svg') }}" alt="">
+                        <p>Sinh hoat he...</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Categories Widget -->
+    <div class="card my-4">
+        <div href="" class="none-decor ribbon">
+            <h5 class="card-header">
+                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                Danh mục</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="#">Web Design</a>
+                        </li>
+                        <li>
+                            <a href="#">HTML</a>
+                        </li>
+                        <li>
+                            <a href="#">Freebies</a>
                         </li>
                     </ul>
                 </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card card-outline-primary h-100">
-                    <h3 class="card-header bg-primary text-white">Plus</h3>
-                    <div class="card-body">
-                        <div class="display-4">$39.99</div>
-                        <div class="font-italic">per month</div>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
-                        <li class="list-group-item">
-                            <a href="#" class="btn btn-primary">Sign Up!</a>
+                <div class="col-lg-6">
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="#">JavaScript</a>
                         </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card h-100">
-                    <h3 class="card-header">Ultra</h3>
-                    <div class="card-body">
-                        <div class="display-4">$159.99</div>
-                        <div class="font-italic">per month</div>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
-                        <li class="list-group-item">
-                            <a href="#" class="btn btn-primary">Sign Up!</a>
+                        <li>
+                            <a href="#">CSS</a>
+                        </li>
+                        <li>
+                            <a href="#">Tutorials</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <!-- /.row -->
-
     </div>
-    <!-- /.container -->
 @endsection
