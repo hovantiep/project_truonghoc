@@ -43,7 +43,7 @@
                         {{-- Co sub menu --}}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle dropdown-toggle"
-                               href="{{ $item_0->route != '' ? route($item_0->route, [$item_0->alias]) : '#' }}"
+                               href="{{ $item_0->route != '' ? route($item_0->route) : '#' }}"
                                id="navbarDropdown{{ $item_0->id }}"
                                data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="true">

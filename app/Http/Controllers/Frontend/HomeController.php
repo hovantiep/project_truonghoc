@@ -111,7 +111,7 @@ class HomeController extends Controller
         return view('frontend.static.404');
     }
 
-    public function news($slug) //tin_tuc
+    public function news() //tin_tuc
     {
         $news = DB::table('news')->orderBy('updated_at', 'DESC')->get();
         return view('frontend.news.news', compact(['news']));
@@ -159,7 +159,7 @@ class HomeController extends Controller
         return view('frontend.news.detail', compact(['news']));
     }
 
-    public function active($slug) //hoat_dong
+    public function active() //hoat_dong
     {
         $active = DB::table('actives')->orderBy('updated_at', 'DESC')->get();
         return view('frontend.active.active', compact(['active']));
@@ -234,7 +234,7 @@ class HomeController extends Controller
         return view('frontend.active.detail', compact(['active']));
     }
 
-    public function document($slug) //van_ban
+    public function document() //van_ban
     {
         $document = DB::table('documents')->orderBy('updated_at', 'DESC')->get();
         return view('frontend.documents.document', compact(['document']));
@@ -308,53 +308,34 @@ class HomeController extends Controller
 //        Hien thi view dang hoat_dong_detail, tin_tuc_detail
         return view('frontend.documents.detail', compact(['document']));
     }
-
-    /**
-     * Hien thi cac loai trang (thuoc common route), view co tinh ke thua, dung chung layout
-     * @param $type
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function common($type, $id) //thong bao,... // id cua category
+// =============================================================
+    public function school()
     {
-//        Tim parentName khi biet $id cua category
-        $parentID = DB::table('categories')->where('id', $id)->first()->parent_id; //47
-        $parentName = Category::select('alias')->where('id', $parentID)->first()->alias; // van_ban
-
-//        Hien thi view dang van ban, ...
-        $view = 'frontend.common.' . $parentName . '_' . $type;
-        if (view()->exists($view)) {
-            return view($view);
-        }
-        return view('frontend.static.404');
+        return view('frontend.pages.school');
     }
 
-    public function common_detail($type, $id) //van ban,... // id cua category
+    public function notification($slug1, $id)
     {
-//        Tim parentName khi biet $id cua category
-        $parentID = DB::table('categories')->where('id', $id)->first()->parent_id; //47
-        $parentName = Category::select('alias')->where('id', $parentID)->first()->alias; // van_ban
-
-//        Hien thi view dang van ban, ...
-        $view = 'frontend.common.' . $parentName . '_detail';
-        if (view()->exists($view)) {
-            return view($view);
-        }
-        return view('frontend.static.404');
+        return view('frontend.pages.' . $slug1);
     }
 
-    /**
-     * Hien thi view thong bao, menu nay nam o menu chinh, co route ro rang +dac biet+
-     * @return string
-     */
-    public function thong_bao()
+    public function menu($slug2, $id)
     {
-        $route = Route::currentRouteName();
-        $view = 'frontend.category.' . $route;
-        if (view()->exists($view)) {
-            return view($view);
-        }
-        return view('frontend.static.404');
+        return view('frontend.pages.' . $slug2);
     }
 
+    public function schedule($slug3, $id)
+    {
+        return view('frontend.pages.' . $slug3);
+    }
+// =============================================================
+    public function library()
+    {
+        return view('frontend.pages.library');
+    }
+
+    public function lessonPlan($slug1, $id)
+    {
+        return view('frontend.pages.' . $slug1);
+    }
 }
