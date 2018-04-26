@@ -22,11 +22,6 @@ class HomeController extends Controller
 //        $this->middleware('auth');
     }
 
-    /**
-     * Hien thi tat ca noi dung tren trang chu
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
 //        Lay tat ca news
@@ -37,25 +32,6 @@ class HomeController extends Controller
                 'categories.id as categoryId', 'categories.name', 'categories.alias as categoryAlias', 'categories.order as categoryOrder',
                 'categories.parent_id', 'categories.description', 'categories.route', 'categories.updated_at')
             ->get();
-//
-////        Tim ra nhom tin tuc (co route la news) nhung khong phai la noi bat
-//        $cate = 'news';
-//        $news = $posts->where('route', $cate)->where('highlights', 0)->sortByDesc('created_at')->take(5)->all();
-//
-////        Thong bao
-//        $keyword = 'thong_bao';
-//        $alerts = $posts->where('categoryAlias', $keyword)->sortByDesc('created_at')->take(5)->all();
-//
-////        Van ban moi
-//        $category = [64, 65, 66]; // id co ten la van ban... nhin trong csdl :)
-//        $documents = $posts->whereIn('categoryId', $category)->sortByDesc('created_at')->take(5)->all();
-//
-////        Xem nhieu [tin]
-//        $views = $posts->where('route', $cate)->sortByDesc('views')->take(5)->all();
-//
-////        Noi bat [tin]
-//        $highlights = $posts->where('route', $cate)->where('highlights', 1)->sortByDesc('created_at')->take(6)->all();
-
         return view('frontend.index',
             compact(['news'])
         );
@@ -137,105 +113,17 @@ class HomeController extends Controller
 
     public function news($slug) //tin_tuc
     {
-//        Tim parentName khi biet $id cua category
-//        $category = DB::table('categories')->where('id', $id)->first();
-//        $parent = Category::select('name', 'alias')->where('id', $category->parent_id)->first(); // tin_tuc
-//        $route = Route::currentRouteName();
-//        Hien thi view dang hoat_dong, tin_tuc
-
-//        Tat ca post
-//        $posts = DB::table('categories')
-//            ->join('news', 'news.category_id', '=', 'categories.id')
-//            ->select('news.id', 'news.category_id', 'news.user_id', 'news.title', 'news.alias as postAlias', 'news.intro', 'news.order', 'news.intro',
-//                'news.content', 'news.keywords', 'news.image', 'news.highlights', 'news.views', 'news.created_at',
-//                'categories.id as categoryId', 'categories.name', 'categories.alias as categoryAlias', 'categories.order as categoryOrder',
-//                'categories.parent_id', 'categories.keywords as categoryKeywords', 'categories.description', 'categories.route')
-//            ->get();
-//
-////        Tim ra nhom tin tuc (co route la news)
-//        $cate = 'news';
-//        $news = $posts->where('route', $cate)->where('categoryAlias', $type)->sortByDesc('created_at')->all();
-
         $news = DB::table('news')->orderBy('updated_at', 'DESC')->get();
-//        Ham phan trang trong function rieng tu tao
-//        $news = paginater($news, 2);
-//        Cai dat duong dan moi dung duoc: do paginate tu viet
-//        $news->setPath($id);
-
-////        Thong bao
-//        $keyword = 'thong_bao';
-//        $alerts = $posts->where('categoryAlias', $keyword)->sortByDesc('created_at')->take(5)->all();
-//
-////        Van ban moi
-//        $arrCate = [64, 65, 66]; // id co ten la van ban... nhin trong csdl :)
-//        $documents = $posts->whereIn('categoryId', $arrCate)->sortByDesc('created_at')->take(5)->all();
-//
-////        Xem nhieu [tin]
-//        $views = $posts->where('route', $cate)->sortByDesc('views')->take(5)->all();
-//
-////        Noi bat [tin]
-//        $highlights = $posts->where('route', $cate)->where('highlights', 1)->sortByDesc('created_at')->take(6)->all();
-//
-//
-//        $view = 'frontend.news.' . $parent->alias;
-//        if (view()->exists($view)) {
-//            return view($view,
-//                compact(['category', 'parent', 'news', 'alerts', 'documents', 'views', 'highlights'])
-//            );
-//        }
-//        return view('frontend.static.404');
         return view('frontend.news.news', compact(['news']));
     }
 
     public function news_group($type, $id) //tin_giao_duc // id cua category
     {
-//        Tim parentName khi biet $id cua category
         $category = DB::table('categories')->where('id', $id)->first(); //47
         $parent = Category::select('name', 'alias')->where('id', $category->parent_id)->first(); // tin_tuc
-//        $route = Route::currentRouteName();
-//        Hien thi view dang hoat_dong, tin_tuc
-
-//        Tat ca post
-//        $posts = DB::table('categories')
-//            ->join('news', 'news.category_id', '=', 'categories.id')
-//            ->select('news.id', 'news.category_id', 'news.user_id', 'news.title', 'news.alias as postAlias', 'news.intro', 'news.order', 'news.intro',
-//                'news.content', 'news.keywords', 'news.image', 'news.highlights', 'news.views', 'news.created_at',
-//                'categories.id as categoryId', 'categories.name', 'categories.alias as categoryAlias', 'categories.order as categoryOrder',
-//                'categories.parent_id', 'categories.keywords as categoryKeywords', 'categories.description', 'categories.route')
-//            ->get();
-//
-////        Tim ra nhom tin tuc (co route la news)
-//        $cate = 'news';
-//        $news = $posts->where('route', $cate)->where('categoryAlias', $type)->sortByDesc('created_at')->all();
-
         $news_group = DB::table('news')->where('category_id', $id)->get();
-//        Ham phan trang trong function rieng tu tao
         $news_group = paginater($news_group, 2);
-//        Cai dat duong dan moi dung duoc: do paginate tu viet
         $news_group->setPath($id);
-
-////        Thong bao
-//        $keyword = 'thong_bao';
-//        $alerts = $posts->where('categoryAlias', $keyword)->sortByDesc('created_at')->take(5)->all();
-//
-////        Van ban moi
-//        $arrCate = [64, 65, 66]; // id co ten la van ban... nhin trong csdl :)
-//        $documents = $posts->whereIn('categoryId', $arrCate)->sortByDesc('created_at')->take(5)->all();
-//
-////        Xem nhieu [tin]
-//        $views = $posts->where('route', $cate)->sortByDesc('views')->take(5)->all();
-//
-////        Noi bat [tin]
-//        $highlights = $posts->where('route', $cate)->where('highlights', 1)->sortByDesc('created_at')->take(6)->all();
-//
-//
-//        $view = 'frontend.news.' . $parent->alias;
-//        if (view()->exists($view)) {
-//            return view($view,
-//                compact(['category', 'parent', 'news', 'alerts', 'documents', 'views', 'highlights'])
-//            );
-//        }
-//        return view('frontend.static.404');
         return view('frontend.news.group', compact(['news_group']));
     }
 
@@ -349,7 +237,7 @@ class HomeController extends Controller
     public function document($slug) //van_ban
     {
         $document = DB::table('documents')->orderBy('updated_at', 'DESC')->get();
-        return view('frontend.document.document', compact(['document']));
+        return view('frontend.documents.document', compact(['document']));
     }
 
     public function document_group($type, $id) //hoat_dong_ngoai_gio // id cua category
@@ -418,7 +306,7 @@ class HomeController extends Controller
 //        $highlights = $posts->where('route', $cate)->where('highlights', 1)->sortByDesc('created_at')->take(6)->all();
 //
 //        Hien thi view dang hoat_dong_detail, tin_tuc_detail
-        return view('frontend.document.detail', compact(['document']));
+        return view('frontend.documents.detail', compact(['document']));
     }
 
     /**
