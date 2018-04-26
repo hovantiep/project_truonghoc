@@ -34,25 +34,25 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 Route::get('/', 'Frontend\HomeController@index')->name('home');
 
 // -------- Hien thi TIN TUC ------------- //
-Route::get('news/{slug}', 'Frontend\HomeController@news')->name('news');
-Route::get('news/{type}/{id}', 'Frontend\HomeController@news_group')->name('news.group');
-Route::get('news/{type}/{slug}/{id}', 'Frontend\HomeController@news_detail')->name('news.detail');
+Route::get('tin_tuc/{slug}', 'Frontend\HomeController@news')->name('news');
+Route::get('tin_tuc/{type}/{id}', 'Frontend\HomeController@news_group')->name('news.group');
+Route::get('tin_tuc/{type}/{slug}/{id}', 'Frontend\HomeController@news_detail')->name('news.detail');
 
 // -------- Hien thi HOAT DONG ------------- //
-Route::get('active/{slug}', 'Frontend\HomeController@active')->name('active');
-Route::get('active/{type}/{id}', 'Frontend\HomeController@active_group')->name('active.group');
-Route::get('active/{type}/{slug}/{id}', 'Frontend\HomeController@active_detail')->name('active.detail');
+Route::get('hoat_dong/{slug}', 'Frontend\HomeController@active')->name('active');
+Route::get('hoat_dong/{type}/{id}', 'Frontend\HomeController@active_group')->name('active.group');
+Route::get('hoat_dong/{type}/{slug}/{id}', 'Frontend\HomeController@active_detail')->name('active.detail');
 
 // -------- Hien thi VAN BAN ------------- //
-Route::get('document/{slug}', 'Frontend\HomeController@document')->name('document');
-Route::get('document/{type}/{id}', 'Frontend\HomeController@document_group')->name('document.group');
-Route::get('document/{type}/{slug}/{id}', 'Frontend\HomeController@document_detail')->name('document.detail');
+Route::get('van_ban/{slug}', 'Frontend\HomeController@document')->name('document');
+Route::get('van_ban/{type}/{id}', 'Frontend\HomeController@document_group')->name('document.group');
+Route::get('van_ban/{type}/{slug}/{id}', 'Frontend\HomeController@document_detail')->name('document.detail');
 
-// -------- Hien thi TRUONG HOC ------------- //
-Route::get('school/{slug}', 'Frontend\HomeController@school')->name('school');
-Route::get('alert/{type}/{id}', 'Frontend\HomeController@school_group')->name('school.group');
-Route::get('menu/{type}/{slug}/{id}', 'Frontend\HomeController@school_detail')->name('school.detail');
-Route::get('schedule/{type}/{id}', 'Frontend\HomeController@school_group')->name('school.group');
+// -------- Hien thi TRUONG HOC ------------- // la mot dang page tu do khong thuoc group
+Route::get('truong_hoc/{slug}', 'Frontend\HomeController@school')->name('school');
+Route::get('truong_hoc/{slug1}/{id}', 'Frontend\HomeController@notification')->name('school.notification');
+Route::get('truong_hoc/{slug2}/{id}', 'Frontend\HomeController@menu')->name('school.menu');
+Route::get('truong_hoc/{slug3}/{id}', 'Frontend\HomeController@schedule')->name('school.schedule');
 
 // ------- Hien thi trang tinh ---------- //
 Route::get('static/{slug}', 'Frontend\HomeController@staticPage')->name('static');
