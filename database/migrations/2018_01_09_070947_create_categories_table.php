@@ -19,10 +19,8 @@ class CreateCategoriesTable extends Migration
             $table->string('alias',50);
             $table->smallInteger('order')->default(100);
             $table->unsignedSmallInteger('parent_id');
-            $table->string('keywords',255)->nullable();
             $table->string('description',255)->nullable();
             $table->string('route',255)->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }

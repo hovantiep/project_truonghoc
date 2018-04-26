@@ -19,9 +19,7 @@ class CreateCommentsTable extends Migration
             $table->unsignedInteger('news_id');
             $table->string('content',255);
             $table->smallInteger('order')->default(100);
-            $table->softDeletes();
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('news_id')->references('id')->on('news')->onDelete('cascade');
         });

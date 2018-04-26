@@ -1,66 +1,59 @@
 @extends('frontend.layouts.master')
-
 @section('top-content')
-    <h1 class="mt-4 mb-3">{{ $parent->name }} </h1>
+    <!-- Page Content -->
+    {{--<h1 class="mt-4 mb-3">{{ $category->name }} </h1>--}}
     <!-- Page Heading/Breadcrumbs -->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{ route('home') }}">Home</a>
+            {{--<a href="{{ route('home') }}">Home</a>--}}
         </li>
-        <li class="breadcrumb-item active">{{ $category->name }}</li>
+        {{--<li class="breadcrumb-item active">{{ $parent->name }}</li>--}}
     </ol>
 @stop
 @section('left-content')
-    <!-- Blog Post -->
-    @foreach($news as $article)
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <a href="{{ route('news.detail',[$article->categoryAlias,$article->postAlias, $article->id]) }}">
-                            {{-- Hinh 700x400 --}}
-                            <img class="img-fluid rounded pt-37"
-                                 src="{{ asset('resources/upload/post/'.$article->image) }}" alt="">
-                        </a>
-                    </div>
-                    <div class="col-lg-8">
-                        <h2 class="card-title">{{ $article->title }}</h2>
-                        <p class="card-text">{{ $article->intro }}</p>
-                        <a href="{{ route('news.detail',[$article->categoryAlias,$article->postAlias, $article->id]) }}"
-                           class="btn btn-danger btn-sm">Chi tiết &rarr;</a>
-                    </div>
+    <!-- Post Content Column -->
+    <!-- Date/Time -->
+    <p class="text-right text-muted">Posted on January 1, 2017 at 12:00 PM</p>
+    <!-- Post Content -->
+    {!! $news->content !!}
+    <hr>
+    <!-- Comments Form -->
+    <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <!-- Comment with nested comments -->
+    <div class="media mb-4">
+        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+        <div class="media-body">
+            <h5 class="mt-0">Commenter Name</h5>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
+            purus odio, vestibulum in
+            vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec
+            lacinia
+            congue felis in faucibus.
+            <div class="media mt-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                    <h5 class="mt-0">Commenter Name</h5>
+                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                    sollicitudin. Cras purus odio, vestibulum in
+                    vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
+                    Donec lacinia congue felis in faucibus.
                 </div>
             </div>
-            <div class="card-footer text-muted small">
-                <i class="fa fa-clock-o" aria-hidden="true"></i> January 1, 2017 by {{ $article->user_id }}
-            </div>
         </div>
-    @endforeach
-
-    <!-- Pagination -->
-    @if($news->lastPage() != 1)
-        <ul class="pagination justify-content-center mb-4">
-            @if($news->currentPage() != 1)
-                <li class="page-item">
-                    <a class="page-link " href="{!! $news->url($news->currentPage() - 1) !!}">&larr;</a>
-                </li>
-            @endif
-            @for($i = 1; $i <= $news->lastPage(); $i++)
-                <li class="page-item {!! ($news->currentPage() == $i) ? 'active' : null !!}">
-                    <a class="page-link" href="{{ $news->url($i) }}">{{ $i }}</a>
-                </li>
-            @endfor
-            @if($news->currentPage() != $news->lastPage())
-                <li class="page-item">
-                    <a class="page-link" href="{!! $news->url($news->currentPage() + 1) !!}">&rarr;</a>
-                </li>
-            @endif
-        </ul>
-    @endif
+    </div>
 @stop
 
 @section('right-content')
-    @include('frontend.partials.alertWidgets')
     <!-- Message Widget -->
     <div class="card my-4 mt-0">
         <div class="none-decor ribbon">
@@ -69,17 +62,17 @@
                 Thông báo</h5>
         </div>
         <!-- thong bao trong thang -->
-        <div class="card-body overflow">
-            @foreach( $alerts as $alert)
-                <p>
-                    <a href="{{ route('page',[$alert->categoryAlias, $alert->categoryId, $alert->id]) }}">{{ $alert->title }}
+        {{--<div class="card-body overflow">--}}
+            {{--@foreach( $alerts as $alert)--}}
+                {{--<p>--}}
+                    {{--<a href="#">{{ $alert->title }}--}}
                         {{-- Neu trong ngay thi hien thi nut new canh bao --}}
-                        @if(time() - strtotime($alert->created_at) <= 86400)
-                            <span class="badge badge-danger">New</span>@endif
-                    </a>
-                </p>
-            @endforeach
-        </div>
+                        {{--@if(time() - strtotime($alert->created_at) <= 86400)--}}
+                            {{--<span class="badge badge-danger">New</span>@endif--}}
+                    {{--</a>--}}
+                {{--</p>--}}
+            {{--@endforeach--}}
+        {{--</div>--}}
     </div>
     <!-- News docunents Widget -->
     <div class="card mb-4">
@@ -89,17 +82,17 @@
                 Văn bản mới</h5>
         </div>
         <!-- van ban quan trong -->
-        <div class="card-body overflow">
-            @foreach( $documents as $document)
-                <p>
-                    <a href="#">{{ $document->title }}
+        {{--<div class="card-body overflow">--}}
+            {{--@foreach( $documents as $document)--}}
+                {{--<p>--}}
+                    {{--<a href="#">{{ $document->title }}--}}
                         {{-- Neu trong tuan thi hien thi nut new canh bao --}}
-                        @if(time() - strtotime($document->created_at) <= 604800)
-                            <span class="badge badge-info">New</span>@endif
-                    </a>
-                </p>
-            @endforeach
-        </div>
+                        {{--@if(time() - strtotime($document->created_at) <= 604800)--}}
+                            {{--<span class="badge badge-info">New</span>@endif--}}
+                    {{--</a>--}}
+                {{--</p>--}}
+            {{--@endforeach--}}
+        {{--</div>--}}
     </div>
     <!-- Most View Widget -->
     <div class="card my-4">
@@ -109,15 +102,15 @@
                 Tin đọc nhiều</h5>
         </div>
         <!-- top 10 -->
-        <div class="card-body">
-            @foreach( $views as $view)
-                <p>
-                    <a href="#">{{ $view->title }}
-                        <span class="badge badge-warning">{{ $view->views }}</span>
-                    </a>
-                </p>
-            @endforeach
-        </div>
+        {{--<div class="card-body">--}}
+            {{--@foreach( $views as $view)--}}
+                {{--<p>--}}
+                    {{--<a href="#">{{ $view->title }}--}}
+                        {{--<span class="badge badge-warning">{{ $view->views }}</span>--}}
+                    {{--</a>--}}
+                {{--</p>--}}
+            {{--@endforeach--}}
+        {{--</div>--}}
     </div>
     <!-- Image Widget -->
     <div class="card my-4">

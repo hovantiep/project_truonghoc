@@ -19,7 +19,6 @@ class CreateSlidesTable extends Migration
             $table->smallInteger('order')->default(100);
             $table->string('image',255)->nullable();
             $table->string('link',255)->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -6,7 +6,7 @@
             <a href="{{ route('dashboard.index') }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ route('post.index') }}">Post</a>
+            <a href="{{ route('news.index') }}">Post</a>
         </li>
         <li class="breadcrumb-item active">Edit</li>
     </ol>
@@ -16,11 +16,11 @@
             {{--Displaying The Validation Errors--}}
             @include('backend.partials.validate_errors')
             {{--End Displaying The Validation Errors--}}
-            <form action="{{ route('post.update',$post->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('news.update',$news->id) }}" method="POST" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="example-text-input" class="col-2 col-form-label">Title</label>
                     <div class="col-10">
-                        <input class="form-control" type="text" value="{!! old('title',$post->title) !!}"
+                        <input class="form-control" type="text" value="{!! old('title',$news->title) !!}"
                                id="example-text-input"
                                name="title">
                     </div>
@@ -30,14 +30,14 @@
                     <div class="col-10">
                         <select class="form-control custom-select" id="category_id" name="category_id">
                             <option value=0>None</option>
-                            @php generateSelect($types, 0,"",old('category_id', $post->category_id)) @endphp
+                            @php generateSelect($types, 0,"",old('category_id', $news->category_id)) @endphp
                         </select>
                     </div>
                 </div>
                 <div class=" form-group row">
                     <label for="example-number-input" class="col-2 col-form-label">Order</label>
                     <div class="col-10">
-                        <input class="form-control" type="number" value="{!! old('order', $post->order) !!}"
+                        <input class="form-control" type="number" value="{!! old('order', $news->order) !!}"
                                id="example-number-input"
                                name="order">
                     </div>
@@ -45,14 +45,14 @@
                 <div class="form-group row">
                     <label for="example-url-input" class="col-2 col-form-label">Intro</label>
                     <div class="col-10">
-                        <input class="form-control" type="text" value="{!! old('intro', $post->intro) !!}"
+                        <input class="form-control" type="text" value="{!! old('intro', $news->intro) !!}"
                                id="example-url-input" name="intro">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="example-url-input" class="col-2 col-form-label">Keywords</label>
                     <div class="col-10">
-                        <input class="form-control" type="text" value="{!! old('keywords', $post->keywords) !!}"
+                        <input class="form-control" type="text" value="{!! old('keywords', $news->keywords) !!}"
                                id="example-url-input" name="keywords">
                     </div>
                 </div>
@@ -60,9 +60,9 @@
                     <div class="col-sm-10 offset-sm-2">
                         <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
                             <input type="checkbox" class="custom-control-input"
-                                   {!! old('highlights', $post->highlights) == true ? 'checked' : '' !!} name="highlights">
+                                   {!! old('highlights', $news->highlights) == true ? 'checked' : '' !!} name="highlights">
                             <span class="custom-control-indicator"></span>
-                            <span class="custom-control-description">This is highlights post</span>
+                            <span class="custom-control-description">This is highlights news</span>
                         </label>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                     <div class="col-10">
                         <textarea class="form-control" id="content"
                                   name="content"
-                                  rows="5">{!! old('content', $post->content) !!}
+                                  rows="5">{!! old('content', $news->content) !!}
                         </textarea>
                     </div>
                 </div>
@@ -87,8 +87,8 @@
                 <button type="submit" name="action" value="save_and_close" class="btn btn-success offset-2">Save &amp;
                     Close
                 </button>
-                <a href="{{ route('post.show',$post->id) }}" class="btn btn-info">Show</a>
-                <a href="{{ route('post.index') }}" class="btn btn-danger">Close</a>
+                <a href="{{ route('news.show',$news->id) }}" class="btn btn-info">Show</a>
+                <a href="{{ route('news.index') }}" class="btn btn-danger">Close</a>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="_method" value="PUT"/>
             </form>

@@ -4,7 +4,7 @@ namespace truonghoc;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class News extends Model
 {
 //    protected $table = 'Posts';
     /**

@@ -5,7 +5,7 @@ namespace truonghoc\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
 
-class PostStoreRequest extends FormRequest
+class NewsStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

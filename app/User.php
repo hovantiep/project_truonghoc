@@ -27,8 +27,23 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function post()
+    public function news()
     {
-        return $this->hasMany('truonghoc\Post', 'user_id', 'id');
+        return $this->hasMany('truonghoc\News', 'user_id', 'id');
+    }
+
+    public function active()
+    {
+        return $this->hasMany('truonghoc\Active', 'user_id', 'id');
+    }
+
+    public function document()
+    {
+        return $this->hasMany('truonghoc\Document', 'user_id', 'id');
+    }
+
+    public function alert()
+    {
+        return $this->hasMany('truonghoc\Alert', 'user_id', 'id');
     }
 }

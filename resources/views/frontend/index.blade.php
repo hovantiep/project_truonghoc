@@ -50,17 +50,17 @@
         @foreach($news as $article)
             <div class="col-sm-12 portfolio-item">
                 <div class="media">
-                    <a href="{{ route('news.detail',[$article->categoryAlias,$article->postAlias, $article->id]) }}">
+                    <a href="{{ route('news.detail',[$article->categoryAlias,$article->newsAlias, $article->id]) }}">
                         {{-- Hinh 200x140 --}}
                         <img class="d-flex mr-3 pt-25 img-responsive img-200x140"
                              src="{{ asset('resources/upload/post/'.$article->image) }}"
                              alt="image">
                     </a>
                     <div class="media-body text-justify">
-                        <a href="{{ route('news.detail',[$article->categoryAlias,$article->postAlias, $article->id]) }}">
+                        <a href="{{ route('news.detail',[$article->categoryAlias,$article->newsAlias, $article->id]) }}">
                             <h5 class="mt-0">{{ $article->title }}</h5>
                         </a>
-                        <a href="{{ route('news',[$article->categoryAlias, $article->categoryId]) }}"
+                        <a href="{{ route('news.group',[$article->categoryAlias, $article->categoryId]) }}"
                            class="small text-muted">{{ $article->name }}</a><br>
                         {{ $article->intro }}
                     </div>
@@ -73,27 +73,27 @@
         <i class="fa fa-leanpub" aria-hidden="true"></i>
         Nổi bật</h2>
     <!-- Portfolio Section 1-->
-    <div class="row">
-        @foreach($highlights as $highlight)
-            <div class="col-sm-4 portfolio-item">
-                <div class="card h-100">
-                    <a href="{{ route('news.detail',[$highlight->categoryAlias,$highlight->postAlias, $highlight->id]) }}">
+    {{--<div class="row">--}}
+        {{--@foreach($highlights as $highlight)--}}
+            {{--<div class="col-sm-4 portfolio-item">--}}
+                {{--<div class="card h-100">--}}
+                    {{--<a href="{{ route('news.detail',[$highlight->categoryAlias,$highlight->postAlias, $highlight->id]) }}">--}}
                         {{-- 700 x 400 --}}
-                        <img class="card-img-top img-700x400"
-                             src="{{ asset('resources/upload/post/'.$highlight->image) }}" alt="image">
-                    </a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="{{ route('news.detail',[$highlight->categoryAlias,$highlight->postAlias, $highlight->id]) }}">{{ $highlight->title }}</a>
-                        </h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
-                            numquam
-                            aspernatur eum quasi sapiente nesciunt?</p>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    </div>
+                        {{--<img class="card-img-top img-700x400"--}}
+                             {{--src="{{ asset('resources/upload/post/'.$highlight->image) }}" alt="image">--}}
+                    {{--</a>--}}
+                    {{--<div class="card-body">--}}
+                        {{--<h4 class="card-title">--}}
+                            {{--<a href="{{ route('news.detail',[$highlight->categoryAlias,$highlight->postAlias, $highlight->id]) }}">{{ $highlight->title }}</a>--}}
+                        {{--</h4>--}}
+                        {{--<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet--}}
+                            {{--numquam--}}
+                            {{--aspernatur eum quasi sapiente nesciunt?</p>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--@endforeach--}}
+    {{--</div>--}}
     <!-- /.row -->
     <!-- /.row -->
     <h2 class="ribbon">
@@ -158,17 +158,17 @@
                 Thông báo</h5>
         </div>
         <!-- thong bao trong thang -->
-        <div class="card-body overflow">
-            @foreach( $alerts as $alert)
-                <p>
-                    <a href="#">{{ $alert->title }}
+        {{--<div class="card-body overflow">--}}
+            {{--@foreach( $alerts as $alert)--}}
+                {{--<p>--}}
+                    {{--<a href="#">{{ $alert->title }}--}}
                         {{-- Neu trong ngay thi hien thi nut new canh bao --}}
-                        @if(time() - strtotime($alert->created_at) <= 86400)
-                            <span class="badge badge-danger">New</span>@endif
-                    </a>
-                </p>
-            @endforeach
-        </div>
+                        {{--@if(time() - strtotime($alert->created_at) <= 86400)--}}
+                            {{--<span class="badge badge-danger">New</span>@endif--}}
+                    {{--</a>--}}
+                {{--</p>--}}
+            {{--@endforeach--}}
+        {{--</div>--}}
     </div>
     <!-- News docunents Widget -->
     <div class="card mb-4">
@@ -178,17 +178,17 @@
                 Văn bản mới</h5>
         </div>
         <!-- van ban quan trong -->
-        <div class="card-body overflow">
-            @foreach( $documents as $document)
-                <p>
-                    <a href="#">{{ $document->title }}
+        {{--<div class="card-body overflow">--}}
+            {{--@foreach( $documents as $document)--}}
+                {{--<p>--}}
+                    {{--<a href="#">{{ $document->title }}--}}
                         {{-- Neu trong tuan thi hien thi nut new canh bao --}}
-                        @if(time() - strtotime($document->created_at) <= 604800)
-                            <span class="badge badge-info">New</span>@endif
-                    </a>
-                </p>
-            @endforeach
-        </div>
+                        {{--@if(time() - strtotime($document->created_at) <= 604800)--}}
+                            {{--<span class="badge badge-info">New</span>@endif--}}
+                    {{--</a>--}}
+                {{--</p>--}}
+            {{--@endforeach--}}
+        {{--</div>--}}
     </div>
     <!-- Most View Widget -->
     <div class="card my-4">
@@ -198,15 +198,15 @@
                 Tin đọc nhiều</h5>
         </div>
         <!-- top 10 -->
-        <div class="card-body">
-            @foreach( $views as $view)
-                <p>
-                    <a href="#">{{ $view->title }}
-                        <span class="badge badge-warning">{{ $view->views }}</span>
-                    </a>
-                </p>
-            @endforeach
-        </div>
+        {{--<div class="card-body">--}}
+            {{--@foreach( $views as $view)--}}
+                {{--<p>--}}
+                    {{--<a href="#">{{ $view->title }}--}}
+                        {{--<span class="badge badge-warning">{{ $view->views }}</span>--}}
+                    {{--</a>--}}
+                {{--</p>--}}
+            {{--@endforeach--}}
+        {{--</div>--}}
     </div>
     <!-- Image Widget -->
     <div class="card my-4">

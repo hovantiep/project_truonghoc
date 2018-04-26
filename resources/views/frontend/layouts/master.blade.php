@@ -6,7 +6,7 @@
     <meta name="description"
           content="@yield('description')">
     <meta name="author" content="Hồ Văn Tiếp - GV tin học">
-    <title>Trường Tiểu học Thủy Đông A</title>
+    <title>Trường Tiểu học Thủy Đông</title>
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('public/frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -42,10 +42,11 @@
                     @if(!empty($level_1->toArray()))
                         {{-- Co sub menu --}}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle dropdown-toggle" href="#"
+                            <a class="nav-link dropdown-toggle dropdown-toggle"
+                               href="{{ $item_0->route != '' ? route($item_0->route, [$item_0->alias]) : '#' }}"
                                id="navbarDropdown{{ $item_0->id }}"
                                data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
+                               aria-expanded="true">
                                 {{ $item_0->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-left"

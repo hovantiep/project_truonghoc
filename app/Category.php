@@ -15,8 +15,23 @@ class Category extends Model
         'name', 'alias', 'order', 'parent_id', 'keywords', 'description', 'route'
     ];
 
-    public function post()
+    public function news()
     {
-        return $this->hasMany('truonghoc\Post', 'category_id', 'id');
+        return $this->hasMany('truonghoc\News', 'category_id', 'id');
+    }
+
+    public function active()
+    {
+        return $this->hasMany('truonghoc\Active', 'category_id', 'id');
+    }
+
+    public function document()
+    {
+        return $this->hasMany('truonghoc\Document', 'category_id', 'id');
+    }
+
+    public function alert()
+    {
+        return $this->hasMany('truonghoc\Alert', 'category_id', 'id');
     }
 }

@@ -25,7 +25,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('dashboard', 'Backend\DashboardController@index')->name('dashboard.index');
     Route::resource('slide', 'Backend\SlideController');
     Route::resource('category', 'Backend\CategoryController');
-    Route::resource('post', 'Backend\PostController');
+    Route::resource('news', 'Backend\NewsController');
 //    Route::resource('comment', 'Backend\CommentController');
 });
 
@@ -33,15 +33,28 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 // Trang chu
 Route::get('/', 'Frontend\HomeController@index')->name('home');
 
+// -------- Hien thi tat ca TIN TUC trong loai tin ------------- //
+Route::get('news/{slug}', 'Frontend\HomeController@news')->name('news');
+Route::get('news_group/{type}/{id}', 'Frontend\HomeController@news_group')->name('news.group');
+Route::get('news_detail/{type}/{slug}/{id}', 'Frontend\HomeController@news_detail')->name('news.detail');
+
+// -------- Hien thi tat ca HOAT DONG trong loai tin ------------- //
+Route::get('active/{slug}', 'Frontend\HomeController@active')->name('active');
+Route::get('active_group/{type}/{id}', 'Frontend\HomeController@active_group')->name('active.group');
+Route::get('active_detail/{type}/{slug}/{id}', 'Frontend\HomeController@active_detail')->name('active.detail');
+
+// -------- Hien thi tat ca VAN BAN trong loai tin ------------- //
+Route::get('document/{slug}', 'Frontend\HomeController@document')->name('document');
+Route::get('document_group/{type}/{id}', 'Frontend\HomeController@document_group')->name('document.group');
+Route::get('document_detail/{type}/{slug}/{id}', 'Frontend\HomeController@document_detail')->name('document.detail');
+
 // ------- Hien thi trang tinh ---------- //
 Route::get('static/{slug}', 'Frontend\HomeController@staticPage')->name('static');
 
 // -------- Hien thi Page (Trang rieng nam trong category) ---------- //
 Route::get('page/{type}/{id}/{postId?}', 'Frontend\HomeController@page')->name('page');
 
-// -------- Hien thi tat ca TIN TUC trong loai tin ------------- //
-Route::get('news/{type}/{id}', 'Frontend\HomeController@news')->name('news');
-Route::get('news_detail/{type}/{slug}/{id}', 'Frontend\HomeController@news_detail')->name('news.detail');
+
 
 // ------ Hien thi nhung trang co layout chung - giong voi route news nhung khong phai loai tin tuc --------- //
 Route::get('common/{type}/{id}', 'Frontend\HomeController@common')->name('common');
